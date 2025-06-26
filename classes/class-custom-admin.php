@@ -15,8 +15,22 @@ if(!class_exists('Custom_Admin')){
                 'Custom Login',
                 'manage_options',
                 'Custom_Login',
-                'Custom_Login_Settings_Page'
+                array($this, 'settings_page'),
+                'dashicons-lock',
+                81,
             );
+        }
+
+        public function settings_page(){
+            ?>
+
+            <div class="wrap">
+                <h1>Custom Login Settings</h1>
+                <p>Hey how are all of you guys doing</p>
+                
+            </div>
+
+            <?
         }
     }
 }
