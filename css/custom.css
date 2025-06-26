@@ -98,9 +98,6 @@ body.login {
     }
 }
 
-            /* Custom login styles */
-            
-            /* Custom login styles */
             
             /* Custom login styles */
             .login h1 a {
@@ -110,127 +107,7 @@ body.login {
                 height: 100px;
                 display: block;
                 background-color:black;
-                clip-path: circle(40% at center);
-            }
-
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-            
-            /* Custom login styles */
-            .login h1 a {
-                background-image: url('http://localhost:10004/wp-content/plugins/mu-plugins/images/hopreneur.jpg');
-                background-size: contain;
-                width: 220px;
-                height: 100px;
-                display: block;
-                background-color:black;
-                clip-path: circle(40% at center);
-            }
-
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-            
-            /* Custom login styles */
-            .login h1 a {
-                background-image: url('http://localhost:10004/wp-content/plugins/mu-plugins/images/hopreneur.jpg');
-                background-size: contain;
-                width: 220px;
-                height: 100px;
-                display: block;
-                background-color:black;
-                clip-path: circle(40% at center);
-            }
-
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-            
-            /* Custom login styles */
-            .login h1 a {
-                background-image: url('http://localhost:10004/wp-content/plugins/mu-plugins/images/hopreneur.jpg');
-                background-size: contain;
-                width: 220px;
-                height: 100px;
-                display: block;
-                background-color:black;
-                clip-path: circle(40% at center);
-            }
-
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-            
-            /* Custom login styles */
-            .login h1 a {
-                background-image: url('http://localhost:10004/wp-content/plugins/mu-plugins/images/hopreneur.jpg');
-                background-size: contain;
-                width: 220px;
-                height: 100px;
-                display: block;
-                background-color:black;
-                clip-path: circle(40% at center);
-            }
-
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-            
-            /* Custom login styles */
-            .login h1 a {
-                background-image: url('http://localhost:10004/wp-content/plugins/mu-plugins/images/hopreneur.jpg');
-                background-size: contain;
-                width: 220px;
-                height: 100px;
-                display: block;
-                background-color:black;
-                clip-path: circle(40% at center);
-            }
-
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-            
-            /* Custom login styles */
-            .login h1 a {
-                background-image: url('http://localhost:10004/wp-content/plugins/mu-plugins/images/hopreneur.jpg');
-                background-size: contain;
-                width: 220px;
-                height: 100px;
-                display: block;
-                background-color:black;
-                clip-path: circle(40% at center);
-            }
-
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-            
-            /* Custom login styles */
-            .login h1 a {
-                background-image: url('http://localhost:10004/wp-content/plugins/mu-plugins/images/hopreneur.jpg');
-                background-size: contain;
-                width: 220px;
-                height: 100px;
-                display: block;
-                background-color:black;
-                clip-path: circle(40% at center);
-            }
-
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-            
-            /* Custom login styles */
-            .login h1 a {
-                background-image: url('http://localhost:10004/wp-content/plugins/mu-plugins/images/hopreneur.jpg');
-                background-size: contain;
-                width: 220px;
-                height: 100px;
-                display: block;
-                background-color:black;
-                clip-path: circle(40% at center);
+                clip-path: circle(50% at center);
             }
 
             .g-recaptcha {

@@ -37,6 +37,7 @@ if(!class_exists('Wp_Custom_Login')){
             self::$instance = new Wp_Custom_Login();
             self::$instance->setup_constants();
             self::$instance->includes();
+            self::$instance->admin_settings = new Custom_Admin();
             self::$instance->login_page = new Custom_Login();
         }
 
@@ -67,6 +68,7 @@ if(!class_exists('Wp_Custom_Login')){
 
     public function includes(){
         require_once Wp_Custom_Drive . '/classes/class-login.php';
+        require_once Wp_Custom_Drive . '/classes/class-custom-admin.php';
     }
     
     public function load_text_domain(){

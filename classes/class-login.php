@@ -2,11 +2,13 @@
 
 if(!class_exists('Custom_Login')){
     class Custom_Login{
+        private $file_path;
         private $recaptcha_keys;
         private static $defaults;
 
         public function __construct(){
             $this->recaptcha_keys = require __DIR__ . '/class-config.php';
+            $this->file_path = Wp_Custom_Drive . '/css/custom.css';
             //add_action('login_init', array($this, 'load_scripts'));
             add_action('login_enqueue_scripts', array($this, 'load_scripts'));
             add_action('login_form', array($this, 'add_recaptcha_field'), 10);
@@ -29,8 +31,7 @@ if(!class_exists('Custom_Login')){
     }
 
         public function defaults(){
-        if(!isset(self::$defaults) && !(self::$defaults instanceof Custom_Login)){
-            self::$defaults = "
+        self::$defaults = "
             /* Custom login styles */
             .login h1 a {
                 background-image: url('" . Wp_Custom_Url . "images/hopreneur.jpg');
@@ -39,7 +40,7 @@ if(!class_exists('Custom_Login')){
                 height: 100px;
                 display: block;
                 background-color:black;
-                clip-path: circle(40% at center);
+                clip-path: circle(50% at center);
             }
 
             .g-recaptcha {
@@ -47,11 +48,14 @@ if(!class_exists('Custom_Login')){
             }
             ";
 
-        file_put_contents(Wp_Custom_Drive . 'css/custom.css', self::$defaults, FILE_APPEND);
+            $current_css = file_get_contents($this->file_path);
+            if(strpos($current_css, '/* Custom login styles */') === false){
+                file_put_contents($this->file_path, self::$defaults, FILE_APPEND);
+
+            }
 
         }
 
-        }
 
         public function add_recaptcha_field(){
             $site_key = esc_attr($this->recaptcha_keys['site_key']);
