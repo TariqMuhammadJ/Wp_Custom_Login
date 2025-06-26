@@ -45,6 +45,17 @@ if(!class_exists('Wp_Custom_Login')){
     }
 
 
+    public function locate_template($slug){
+        $path = Wp_Custom_Drive . "/templates/{$slug}.php";
+        if(file_exists($path)){
+            return $path;
+        }
+        else{
+            return false;
+        }
+    }
+
+
     public function setup_constants(){
         //global $template;
         if(!defined('Wp_Custom_Version')){
@@ -77,7 +88,15 @@ if(!class_exists('Wp_Custom_Login')){
     }
 }
 
-add_action('plugins_loaded', array('Wp_Custom_Login', 'instance'));
+//add_action('plugins_loaded', array('Wp_Custom_Login', 'instance'));
+
+function Wp_Custom_Login(){
+    global $Wp_Custom_Login;
+    $Wp_Custom_Login = Wp_Custom_Login::instance();
+
+}
+
+Wp_Custom_Login();
 
 }
 

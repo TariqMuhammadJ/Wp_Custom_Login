@@ -14,8 +14,51 @@ if(!class_exists('Custom_Login')){
             add_action('login_form', array($this, 'add_recaptcha_field'), 10);
             add_action('login_head', array('Class_Options', 'custom_options'));
             add_filter('authenticate', array($this, 'authenticate_user'), 20, 3);
+            add_filter('retrieve_password_message', array($this, 'render_email_template'), 30, 4);
+            add_filter('retrieve_password_title', array($this, 'retrieve_title'), 35, 2);
+            add_filter('wp_mail_content_type', array($this, 'mail_type'), 31);
         }
 
+        public function render_email_template($message, $key, $user_login, $user_data){
+            global $Wp_Custom_Login;
+            $reset_link = network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login');
+            $template = $Wp_Custom_Login->locate_template('lost-password');
+            if(!file_exists($template)){
+                wp_die("Sorry no template found", "For the Path");
+            }
+
+            $vars = [
+                'reset_link' => $reset_link,
+                'user_login' => $user_login
+                
+            ];
+
+            ob_start();
+
+            $placeholders = [];
+            foreach($vars as $var => $value){
+                $placeholders["{{{$var}}}"] = $value;
+
+            }
+            include $template;
+            $html = ob_get_clean();
+            add_filter('wp_mail_content_type', function (){
+                return 'text/plain';
+            });
+            return strtr($html, $placeholders);
+        
+
+        }
+
+        public function mail_type(){
+            return 'text/html';
+        }
+
+        public function retrieve_title($title, $user_login){
+             return '🔐 Reset Your Password - ' . get_bloginfo('name');
+        }
+
+        
         public function include(){
             require_once plugin_dir_path(__FILE__) . 'class-options.php';
         }
