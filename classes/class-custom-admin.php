@@ -15,7 +15,7 @@ if (!class_exists('Custom_Admin')) {
             // Ensure this constant is defined OR replace with plugin_dir_url
             wp_enqueue_style(
                 'admin-style',
-                plugin_dir_url(__FILE__) . 'css/admin-style.css',
+                Wp_Custom_Url . '/css/admin-style.css',
                 [],
                 '1.0'
             );
@@ -64,36 +64,47 @@ if (!class_exists('Custom_Admin')) {
             $options = get_option('custom_login_options');
             $logo = isset($options['login_logo']) ? esc_attr($options['login_logo']) : '';
             ?>
-            <div class="custom-image-uploader">
-                <input type="text" id="custom_login_logo" name="custom_login_options[login_logo]" value="<?php echo $logo ?>" class="regular-text"/>
-                <input type="button" class="button select-media-button" value="Select Image" />
-                <?php if($logo) :  ?>
-                    <img src="<?php echo $logo; ?>" style="max-height: 80px">
-                <?php endif; ?>
-            </div>
+                <td class="login-logo-url">
+                    <input type="text" id="custom_login_logo" name="custom_login_options[login_logo]" value="<?php echo $logo; ?>" class="regular-text" />
+                    <div style="margin-top: 0.5vw;">
+                    <input type="button" class="button select-media-button" value="Select Image" />
+                    <?php if ($logo) : ?>
+                            <img src="<?php echo esc_url($logo); ?>" style="max-height: 80px;">
+                    <?php endif; ?>
+                    </div>
+                </td>
             <?php
         }
 
+
         public function settings_page() {
             ?>
-            <div class="wrap">
-                <h1>Custom Login Settings</h1>
-                <p>Hey, how are all of you guys doing?</p>
+            <div class="admin-wrap">
+                <div class="welcome-section">
+                    <h1>Custom Login Settings</h1>
+                    <p>Hey, how are all of you guys doing?</p>
+                </div>
 
-                <form method="post" action="options.php">
+                <div class="main-section-bar">
+                    <div class="settings-bar">
+                    <form method="post" action="options.php">
                     <?php
                     settings_fields('custom_login_group');
                     do_settings_sections('custom_login');
                     submit_button();
                     ?>
                 </form>
-                <h2>Live Preview</h2>
+                </div>
+                <div class="iframe-bar">
+                    <h2>Live Preview</h2>
                 <iframe
                     src="<?php echo wp_login_url(); ?>"
                     width="100%"
                     height="600"
                     style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);"
                 ></iframe>
+                </div>
+                </div>
             </div>
             <?php
         }

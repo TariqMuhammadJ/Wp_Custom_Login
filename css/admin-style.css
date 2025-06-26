@@ -1,4 +1,66 @@
 .admin-wrap{
-    background-color: rgb(131, 99, 99);
+    background-image: linear-gradient(to right, black, rgb(61, 42, 42), rgb(60, 51, 35), black);
     padding:2vw;
+    color:white;
+}
+
+:root{
+    --color:white;
+    --input-background:rgba(128, 0, 128, 0.614);
+    --input-radius:10%;
+    --input-padding:0.5vw;
+    --input-border: 2px solid gray;
+    --button-input-color:green;
+    --td-margins:0.5vw;
+
+}
+
+h1{
+    color:var(--color);
+}
+h2{
+    color:var(--color);
+}
+
+.form-table{
+    width: 100%;
+    box-sizing: border-box;
+    padding:2vw;
+}
+
+
+.form-table th{
+    color:var(--color);
+    padding:var(--input-padding);
+}
+
+.form-table td{
+    padding:var(--input-padding);
+}
+
+.form-table td input[type="text"]{
+    background-color: var(--input-background);
+    padding:var(--input-padding);
+    color:var(--color);
+    border:var(--input-border); 
+}
+
+.form-table td input[type="button"]{
+    background-color: var(--button-input-color);
+    color:var(--color);
+}
+
+
+.main-section-bar{
+    display: flex;
+    box-sizing: border-box;
+}
+
+.main-section-bar div:first-child{
+    width:40%;
+    margin-right:1vw;
+}
+
+.iframe-bar{
+    width:60%;
 }
