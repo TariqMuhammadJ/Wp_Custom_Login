@@ -18,6 +18,12 @@ if(!class_exists('Custom_Login')){
         wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js', array());
         wp_enqueue_style('custom-login-style',  Wp_Custom_Url . '/css/custom.css', array(), Wp_Custom_Version);
         $this->defaults();
+        add_filter('login_headerurl', function () {
+            return home_url();
+        } );
+        add_filter('login_headertext',  function (){
+            return get_bloginfo('name');
+        });
 
                 
     }
