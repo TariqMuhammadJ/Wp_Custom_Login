@@ -4,7 +4,6 @@ if(!class_exists('Custom_Login')){
     class Custom_Login{
         private $file_path;
         private $recaptcha_keys;
-        private static $defaults;
 
         public function __construct(){
             $this->recaptcha_keys = require __DIR__ . '/class-config.php';
@@ -12,6 +11,7 @@ if(!class_exists('Custom_Login')){
             //add_action('login_init', array($this, 'load_scripts'));
             add_action('login_enqueue_scripts', array($this, 'load_scripts'));
             add_action('login_form', array($this, 'add_recaptcha_field'), 10);
+            add_action('login_head', array($this, 'custom_options'));
             add_filter('authenticate', array($this, 'authenticate_user'), 20, 3);
         }
 
@@ -19,7 +19,6 @@ if(!class_exists('Custom_Login')){
         public function load_scripts(){
         wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js', array());
         wp_enqueue_style('custom-login-style',  Wp_Custom_Url . '/css/custom.css', array(), Wp_Custom_Version);
-        $this->defaults();
         add_filter('login_headerurl', function () {
             return home_url();
         } );
@@ -30,31 +29,7 @@ if(!class_exists('Custom_Login')){
                 
     }
 
-        public function defaults(){
-        self::$defaults = "
-            /* Custom login styles */
-            .login h1 a {
-                background-image: url('" . Wp_Custom_Url . "images/hopreneur.jpg');
-                background-size: contain;
-                width: 220px;
-                height: 100px;
-                display: block;
-                background-color:black;
-                clip-path: circle(50% at center);
-            }
-
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-            ";
-
-            $current_css = file_get_contents($this->file_path);
-            if(strpos($current_css, '/* Custom login styles */') === false){
-                file_put_contents($this->file_path, self::$defaults, FILE_APPEND);
-
-            }
-
-        }
+        
 
 
         public function add_recaptcha_field(){
@@ -63,6 +38,29 @@ if(!class_exists('Custom_Login')){
             error_log('Rendering reCAPTCHA field');
 
 
+        }
+
+
+        public function custom_options(){
+            $options = get_option('custom_login_options');
+            $logo = !empty($options['login_logo']) ? esc_url($options['login_logo']) : Wp_Custom_Url . '/images/hopreneur.jpg';
+            $clip = 'circle(50% at center)';
+            echo "<style>
+            .login h1 a {
+            background-image:url('{$logo}');
+            background-size:contain;
+            width:220px;
+            height:100px;
+            display:block;
+            background-color:black;
+            clip-path:{$clip};
+        }
+            .g-recaptcha{
+            margin-top:1vw;
+            margin-bottom:1vw;
+        }
+            
+            </style>";
         }
 
         public function authenticate_user($user, $username, $password){

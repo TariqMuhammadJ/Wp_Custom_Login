@@ -1,0 +1,3 @@
+Limit the number of file uploads to the options_settings table - 
+Background-Color-Syles
+REcaptcha-Key-Fields

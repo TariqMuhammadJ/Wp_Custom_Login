@@ -1,0 +1,28 @@
+private static $defaults;
+
+
+public function defaults(){
+        self::$defaults = "
+            /* Custom login styles */
+            .login h1 a {
+                background-image: url('" . Wp_Custom_Url . "images/hopreneur.jpg');
+                background-size: contain;
+                width: 220px;
+                height: 100px;
+                display: block;
+                background-color:black;
+                clip-path: circle(50% at center);
+            }
+
+            .g-recaptcha {
+                margin-top: 20px;
+            }
+            ";
+
+            $current_css = file_get_contents($this->file_path);
+            if(strpos($current_css, '/* custom login styles */') === false){
+                file_put_contents($this->file_path, self::$defaults, FILE_APPEND);
+
+            }
+
+        }
