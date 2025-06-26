@@ -1,91 +1,5 @@
 /* === Custom WordPress Login Styling === */
 
-/* Body background */
-body.login {
-    background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-}
-
-/* Login form container */
-.login form {
-    background: #ffffff;
-    border: 1px solid #ddd;
-    padding: 26px 24px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    max-width: 360px;
-    margin: 0 auto;
-}
-
-/* WordPress logo */
-
-
-/* Input fields */
-.login form .input, 
-.login input[type="text"],
-.login input[type="password"] {
-    font-size: 16px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    width: 100%;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-/* Label styling */
-.login label {
-    font-weight: 600;
-    color: #333;
-}
-
-/* Login button */
-.wp-core-ui .button-primary {
-    background: #0073aa;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    padding: 10px;
-    width: 100%;
-    transition: background 0.3s ease;
-}
-
-.wp-core-ui .button-primary:hover {
-    background: #006799;
-}
-
-/* Lost password and back to site links */
-#nav, #backtoblog {
-    text-align: center;
-    margin-top: 20px;
-}
-
-#nav a, #backtoblog a {
-    color: #ffffff !important;
-    text-decoration: underline;
-    font-weight: 500;
-}
-
-/* Message and error styling */
-.login .message,
-.login .success,
-.login .error {
-    border-left: 4px solid #0073aa;
-    padding: 12px;
-    margin-bottom: 20px;
-    border-radius: 6px;
-}
-
-/* Custom footer */
-.login #login h1 {
-    margin-bottom: 0;
-}
-
-/* CAPTCHA box spacing */
-.g-recaptcha {
-    margin: 20px 0;
-}
-
 /* Responsive tweak */
 @media (max-width: 400px) {
     .login form {
@@ -99,18 +13,12 @@ body.login {
 }
 
             
-            /* Custom login styles */
-            .login h1 a {
-                background-image: url('http://localhost:10004/wp-content/plugins/mu-plugins/images/hopreneur.jpg');
-                background-size: contain;
-                width: 220px;
-                height: 100px;
-                display: block;
-                background-color:black;
-                clip-path: circle(50% at center);
-            }
 
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-            
+.g-recaptcha {
+    margin-top: 1vw;
+    margin-bottom:1vw;
+}
+
+#wp-submit{
+    margin-top:1vw;
+}

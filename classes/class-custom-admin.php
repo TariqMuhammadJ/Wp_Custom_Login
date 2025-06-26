@@ -7,6 +7,11 @@ if (!class_exists('Custom_Admin')) {
             add_action('admin_menu', array($this, 'admin_menu'));
             add_action('admin_init', array($this, 'register_settings'));
             add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
+            add_action('admin_notices', array($this, 'settings_update_notice'));
+        }
+
+        public function settings_update_notice(){
+
         }
 
         public function enqueue_admin_styles($hook) {
@@ -20,6 +25,9 @@ if (!class_exists('Custom_Admin')) {
                 '1.0'
             );
             wp_enqueue_media();
+            wp_enqueue_style('wp-color-picker');
+            wp_enqueue_script('my-color-picker', Wp_Custom_Url . '/js/color-picker.js', ['wp-color-picker'], false, true);
+             
             wp_enqueue_script(
                 'custom-admin-media',
                 Wp_Custom_Url . '/js/custom-admin.js',
@@ -58,11 +66,36 @@ if (!class_exists('Custom_Admin')) {
                 'custom_login',
                 'main_section'
             );
+
+            add_settings_field(
+                'background_color',
+                'BG Color',
+                array($this, 'bg_color_render'),
+                'custom_login',
+                'main_section'
+                
+            );
+
+            
+        }
+
+        public function bg_color_render(){
+            $options = get_options('custom_login_options');
+            $bg_color = isset($options['background_color']) ? esc_attr($options['background_color']) : '';
+            ?>
+             <td>
+            <input type="text" name="custom_login_options[background_color]" id="accent_color"
+            value="<?php echo $bg_color; ?>" class="my-color-field" data-default-color="#ff6600" />
+                
+             </td>
+            <?php 
+            
         }
 
         public function field_logo() {
             $options = get_option('custom_login_options');
             $logo = isset($options['login_logo']) ? esc_attr($options['login_logo']) : '';
+            
             ?>
                 <td class="login-logo-url">
                     <input type="text" id="custom_login_logo" name="custom_login_options[login_logo]" value="<?php echo $logo; ?>" class="regular-text" />
@@ -96,7 +129,6 @@ if (!class_exists('Custom_Admin')) {
                 </form>
                 </div>
                 <div class="iframe-bar">
-                    <h2>Live Preview</h2>
                 <iframe
                     src="<?php echo wp_login_url(); ?>"
                     width="100%"
