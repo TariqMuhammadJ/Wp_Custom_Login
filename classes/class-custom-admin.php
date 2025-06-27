@@ -8,6 +8,7 @@ if (!class_exists('Custom_Admin')) {
             add_action('admin_init', array($this, 'register_settings'));
             add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
             add_action('admin_notices', array($this, 'settings_update_notice'));
+            add_action('phpmailer_init', array($this, 'custom_configuration'));
         }
 
         public function settings_update_notice(){

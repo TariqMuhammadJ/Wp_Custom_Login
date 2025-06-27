@@ -4,7 +4,7 @@
    Plugin URI : -
    Description: A custom login plugin for managing wordpress login pages
    Version    : 1.0
-   Author     : Rakhitha Nimesh
+   Author     : Muhammad Tariq
    Author URI: http://www.wpexpertdeveloper.com/
    License: GPLv2 or later
    Text Domain: custom-login

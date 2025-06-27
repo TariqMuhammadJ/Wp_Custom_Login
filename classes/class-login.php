@@ -17,6 +17,7 @@ if(!class_exists('Custom_Login')){
             add_filter('retrieve_password_message', array($this, 'render_email_template'), 30, 4);
             add_filter('retrieve_password_title', array($this, 'retrieve_title'), 35, 2);
             add_filter('wp_mail_content_type', array($this, 'mail_type'), 31);
+            
         }
 
         public function render_email_template($message, $key, $user_login, $user_data){
@@ -45,7 +46,7 @@ if(!class_exists('Custom_Login')){
             add_filter('wp_mail_content_type', function (){
                 return 'text/plain';
             });
-            return strtr($html, $placeholders);
+
         
 
         }

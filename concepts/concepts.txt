@@ -26,3 +26,33 @@ public function defaults(){
             }
 
         }
+
+
+add_action('admin_notices', function() {
+                $sent = wp_mail(
+        'your@email.com',
+        'Test from wp_mail()',
+        'This is a plain text test email from WordPress.',
+        ['Content-Type: text/plain; charset=UTF-8']
+    );
+
+    if ($sent) {
+        echo '<div class="notice notice-success"><p>Email sent successfully!</p></div>';
+    } else {
+        echo '<div class="notice notice-error"><p>Failed to send email!</p></div>';
+    }$sent = wp_mail(
+        'muhammad.tws49@gmail.com',
+        'Test from wp_mail()',
+        'This is a plain text test email from WordPress.',
+        ['Content-Type: text/plain; charset=UTF-8']
+    );
+
+    if ($sent) {
+        echo '<div class="notice notice-success"><p>Email sent successfully!</p></div>';
+    } else {
+        echo '<div class="notice notice-error"><p>Failed to send email!</p></div>';
+    }
+            });
+
+
+            admin_notices hook for the main admin bar
