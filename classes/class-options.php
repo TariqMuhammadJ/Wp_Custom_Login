@@ -3,6 +3,7 @@ if (!class_exists('Class_Options')) {
     class Class_Options {
 
         public static function custom_options() {
+
             $options = get_option('custom_login_options');
             $logo = !empty($options['login_logo']) 
                 ? esc_url($options['login_logo']) 

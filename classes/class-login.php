@@ -17,7 +17,6 @@ if(!class_exists('Custom_Login')){
             add_filter('retrieve_password_message', array($this, 'render_email_template'), 30, 4);
             add_filter('retrieve_password_title', array($this, 'retrieve_title'), 35, 2);
             add_filter('wp_mail_content_type', array($this, 'mail_type'), 31);
-            
         }
 
         public function render_email_template($message, $key, $user_login, $user_data){
@@ -81,9 +80,18 @@ if(!class_exists('Custom_Login')){
 
 
         public function add_recaptcha_field(){
-            $site_key = esc_attr($this->recaptcha_keys['site_key']);
-            echo '<div class="g-recaptcha" data-sitekey="'. $site_key . '"></div>';
-            error_log('Rendering reCAPTCHA field');
+            $option = get_option('custom_login_options');
+            $site_key = $option['recaptcha_key'];
+            if(isset($site_key)){
+                $value = base64_decode($site_key);
+                $iv = substr($value, 0, iv_length);
+                $encrypted_data = substr($value, iv_length);
+                $decrypted_key = openssl_decrypt($encrypted_data, cipher, secret_key, 0, $iv);
+                echo '<div class="g-recaptcha" data-sitekey="'. $decrypted_key . '"></div>';
+                error_log('Rendering reCAPTCHA field');
+            }
+            else {
+                wp_die('The site key you used is not valid');            }
 
 
         }
@@ -94,10 +102,16 @@ if(!class_exists('Custom_Login')){
         public function authenticate_user($user, $username, $password){
             if(isset($_POST['g-recaptcha-response'])){
                 $recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
+                $option = get_option('custom_login_options');
+                $secret_key = $option['recaptcha_secret'];
+                $value = base64_decode($secret_key);
+                $iv = substr($value, 0 , iv_length);
+                $encrypted_data = substr($value, iv_length);
+                $decrypted_key = openssl_decrypt($encrypted_data, cipher, secret_key, 0, $iv);
 
                 $response = wp_remote_post('https://google.com/recaptcha/api/siteverify', [
                     'body' => [
-                        'secret' => $this->recaptcha_keys['secret_key'],
+                        'secret' => $decrypted_key,
                         'response' => $recaptcha_response,
                         'remoteip' => $_SERVER['REMOTE_ADDR'],
                     ]

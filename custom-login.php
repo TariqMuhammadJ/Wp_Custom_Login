@@ -58,6 +58,22 @@ if(!class_exists('Wp_Custom_Login')){
 
     public function setup_constants(){
         //global $template;
+
+        if(!defined('cipher')){
+            define('cipher', 'aes-256-cbc');
+        }
+        if(!defined('iv_length')){
+            define('iv_length', openssl_cipher_iv_length(cipher) );
+        }
+
+        if(!defined('secret_key')){
+           $key = get_option('SECRET_RECAPTCHA_KEY');
+           if (!$key) {
+                $key = bin2hex(random_bytes(32));
+                add_option('SECRET_RECAPTCHA_KEY', $key, '', 'no');
+            }
+            define('secret_key', $key);
+        }
         if(!defined('Wp_Custom_Version')){
             define('Wp_Custom_Version', '1.0');
         }
