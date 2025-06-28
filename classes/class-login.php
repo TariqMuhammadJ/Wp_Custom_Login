@@ -82,20 +82,22 @@ if(!class_exists('Custom_Login')){
         public function add_recaptcha_field(){
             $option = get_option('custom_login_options');
             $site_key = $option['recaptcha_key'];
-            if(isset($site_key)){
-                $value = base64_decode($site_key);
-                $iv = substr($value, 0, iv_length);
-                $encrypted_data = substr($value, iv_length);
-                $decrypted_key = openssl_decrypt($encrypted_data, cipher, secret_key, 0, $iv);
-                echo '<div class="g-recaptcha" data-sitekey="'. $decrypted_key . '"></div>';
+            if(!empty($site_key)){
+                if(isset($site_key)){
+                error_log(esc_attr($site_key));
+                echo '<div class="g-recaptcha" data-sitekey="'. esc_attr($site_key) . '"></div>';
                 error_log('Rendering reCAPTCHA field');
             }
-            else {
+                else {
                 wp_die('The site key you used is not valid');            }
 
 
-        }
-
+            }
+            else {
+                return;
+            }
+            }
+            
 
        
 

@@ -16,13 +16,6 @@ if (!class_exists('Custom_Admin')) {
 
         public function validate_keys($options){
 
-            if(isset($options['recaptcha_key'])){
-                $site_key = $options['recaptcha_key'];
-                $iv = openssl_random_pseudo_bytes(iv_length);
-                $encrypt = openssl_encrypt($site_key, cipher, secret_key, 0, $iv );
-                $options['recaptcha_key']= base64_encode($iv . $encrypt);
-                
-            }
 
             if(isset($options['recaptcha_secret'])){
                 $secret = $options['recaptcha_secret'];
