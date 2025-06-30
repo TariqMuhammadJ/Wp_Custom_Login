@@ -55,17 +55,18 @@ if(!class_exists('Wp_Custom_Login')){
         }
     }
 
+    public function locateFile($slug){
+        $path = Wp_Custom_Drive . "/classes/class-{$slug}.php";
+        if(file_exists($path)){
+            return $path;
+        }
+        else {
+            return false;
+        }
+    }
+
 
     public function setup_constants(){
-        //global $template;
-
-        if(!defined('cipher')){
-            define('cipher', 'aes-256-cbc');
-        }
-        if(!defined('iv_length')){
-            define('iv_length', openssl_cipher_iv_length(cipher) );
-        }
-
         if(!defined('secret_key')){
            $key = get_option('SECRET_RECAPTCHA_KEY');
            if (!$key) {
@@ -88,8 +89,6 @@ if(!class_exists('Wp_Custom_Login')){
             define('Wp_Custom_Url', plugin_dir_url(__FILE__));
             // used for loading scripts and styles
         }
-
-        //$template->set_plugin_path(Wp_Custom_Drive);
 
     }
 

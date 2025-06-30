@@ -1,10 +1,12 @@
 <?php
+require_once $Wp_Custom_Login->locateFile('encryptor');
 
 if (!class_exists('Custom_Admin')) {
     class Custom_Admin {
-        
+        private $encryptor;
 
         public function __construct() {
+            $this->encryptor = new Encryptor(secret_key);
             add_action('admin_menu', array($this, 'admin_menu'));
             add_action('admin_init', array($this, 'register_settings'));
             add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
@@ -16,12 +18,11 @@ if (!class_exists('Custom_Admin')) {
 
         public function validate_keys($options){
 
-
             if(isset($options['recaptcha_secret'])){
-                $secret = $options['recaptcha_secret'];
-                $iv = openssl_random_pseudo_bytes(iv_length);
-                $encrypted = openssl_encrypt($secret, cipher, secret_key, 0, $iv);
-                $options['recaptcha_secret']= base64_encode($iv . $encrypted);
+                $key = $options['recaptcha_secret'];
+                $sanitized_key = $this->encryptor->encrypt($key);
+                $options['recaptcha_secret'] = $sanitized_key;
+
 
 
 

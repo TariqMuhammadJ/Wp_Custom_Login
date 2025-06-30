@@ -5,10 +5,13 @@ if(!class_exists('Custom_Login')){
         private $file_path;
         private $recaptcha_keys;
 
+        private $decryptor;
+
         public function __construct(){
             $this->recaptcha_keys = require __DIR__ . '/class-config.php';
             $this->include();
-            $this->file_path = Wp_Custom_Drive . '/css/custom.css';
+            $this->decryptor = new Encryptor(secret_key);
+            require_once $Wp_Custom_Login->locateFile('encryptor');
             //add_action('login_init', array($this, 'load_scripts'));
             add_action('login_enqueue_scripts', array($this, 'load_scripts'));
             add_action('login_form', array($this, 'add_recaptcha_field'), 10);
@@ -102,7 +105,10 @@ if(!class_exists('Custom_Login')){
        
 
         public function authenticate_user($user, $username, $password){
-            if(isset($_POST['g-recaptcha-response'])){
+            $secret_key = get_option('SECRET_RECAPTCHA_KEY');
+            $secret = $this->decryptor->decrypt($secret_key);
+            if(!empty($secret)){
+                if(isset($_POST['g-recaptcha-response'])){
                 $recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
                 $option = get_option('custom_login_options');
                 $secret_key = $option['recaptcha_secret'];
@@ -135,8 +141,14 @@ if(!class_exists('Custom_Login')){
              }
 
             return wp_authenticate_username_password(null, $username, $password);
+                
         }
+         else {
+            return wp_authenticate_username_password(null, $username, $password);
+         }
             
+            }
+
             
 
         }
