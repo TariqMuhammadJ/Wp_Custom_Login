@@ -22,3 +22,8 @@
 #wp-submit{
     margin-top:1vw;
 }
+
+
+.notice{
+    background-color: red;
+}

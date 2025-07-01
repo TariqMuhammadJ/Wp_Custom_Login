@@ -14,6 +14,8 @@ if (!class_exists('Class_Options')) {
                 : '#000000';
 
             $clip = 'circle(50% at center)';
+            // use objects and styles for better reference
+            
 
             echo "<style>
                 body.login {
