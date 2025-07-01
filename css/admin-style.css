@@ -1,34 +1,10 @@
 .admin-wrap{
-    background-image: linear-gradient(to right, black, rgb(61, 42, 42), rgb(60, 51, 35), black);
+    background-color:black;
+    box-sizing: border-box;
     padding:2vw;
     color:white;
-}
-
-:root{
-    --color:white;
-    --input-background:rgba(128, 0, 128, 0.614);
-    --input-radius:10%;
-    --input-padding:0.5vw;
-    --input-border: 2px solid gray;
-    --button-input-color:green;
-    --td-margins:0.5vw;
-
-}
-
-h1{
-    color:var(--color);
-}
-h2{
-    color:var(--color);
-}
-
-.form-table{
-    width: 100%;
-    box-sizing: border-box;
-}
-.form-table input:not([type='submit']) {
-    width: 100%;
-    margin-top: 1vw;    
+    height:100vh;
+    overflow-y: auto;
 }
 
 
@@ -36,15 +12,38 @@ h2{
 
 .main-section-bar{
     display: flex;
-    box-sizing: border-box;
+    height:100%;
 }
 
-.main-section-bar div:first-child{
-    width:40%;
-    margin-right:1vw;
+
+.settings-bar{
+    flex:1;
+    background-color: rgb(71, 71, 149);
+    box-sizing: border-box;
+    padding:3vw;
+    width:max-content;
+    overflow-y: scroll;
 }
 
 .iframe-bar{
-    width:60%;
+    flex:1.5;
 }
+
+.form-table{
+    width:100%;
+}
+
+.form-table input[type="text"]{
+    width:100%;
+    margin-top:0.1vw;
+    margin-bottom:1vw;
+}
+
+input{
+    width:100%;
+}
+
+
+
+
 

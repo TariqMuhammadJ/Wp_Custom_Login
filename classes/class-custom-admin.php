@@ -11,9 +11,23 @@ if (!class_exists('Custom_Admin')) {
             add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
             add_action('admin_notices', array($this, 'settings_update_notice'));
             add_filter('pre_update_option_second_login_options', [$this,'validate_keys'], 10,  2);
+            add_action('encrypted_details', [$this, 'successencrypt'], 30, 1);
             // we will work with this later add_action('phpmailer_init', array($this, 'custom_configuration'));
         }
 
+    /*work with this to*/    
+    public function successencrypt($message){
+            if(empty($message)){
+                return false;
+            }
+            else {
+                ?>
+            <div>
+                <p><?php $message ?></p>
+            </div>
+            <?php
+            }
+        }
 
       
       public function validate_keys($new_value, $old_value) {
@@ -22,6 +36,7 @@ if (!class_exists('Custom_Admin')) {
             if (!empty($new_value['recaptcha_secret'])) {
                 $new_value['recaptcha_secret'] = $this->encryptor->encrypt($new_value['recaptcha_secret']);
                 error_log($new_value['recaptcha_secret']);
+                $this->successencrypt($message="you have successfully encrypted");
             }
             return $new_value;
         } else {
@@ -176,33 +191,13 @@ if (!class_exists('Custom_Admin')) {
 
         public function render_fields($field) {
         $options = get_option('custom_login_options');
-        $id = $field['id'];
-        $type = $field['type'];
-        $value = isset($options[$id]) ? esc_attr($options[$id]) : '';
+        //set_query_var('args',$options);
+        //set_query_var('field', $field);
+        global $Wp_Custom_Login;
+        $Wp_Custom_Login->locate_parts('fields', $options, $field);
 
-        if ($type == 'login_logo') {
-            echo "<input type='text' id='{$id}' name='custom_login_options[$id]' value='$value' class='regular-text' />";
-            echo '<input type="button" class="button select-media-button" value="Select Image" />';
-            if ($value) {
-                echo '<img src="' . esc_url($value) . '" style="max-height: 80px; margin-left: 10px;">';
-            }
-        }
-        elseif ($type == "bg_image") {
-            echo "<input type='text' id='{$id}' name='custom_login_options[$id]' value='$value' class='regular-text' />";
-            echo "<input type='button' class='button select-media-button' value='Select Image' />";
-            if ($value) {
-                echo '<img src="' . esc_url($value) . '" style="max-height:80px; margin-left:10px;" />';
-            }
-        }
-        elseif($type == "background-color") {
-            // Default input for background color or other fields
-            echo "<input type='text' name='custom_login_options[$id]' id='accent_color' value='$value' class='my-color-field' 
-            data-default-color='#ff6600' />";
-        }
-        else{
-            echo "<input type='text' name='custom_login_options[$id]' id='{$id}' value='$value' class='regular-text' />";
-        }
-}
+        
+    }
 
         public function settings_page() {
             global $Wp_Custom_Login;

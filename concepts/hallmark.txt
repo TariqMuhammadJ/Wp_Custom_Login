@@ -1,3 +1,16 @@
 Limit the number of file uploads to the options_settings table - 
 Background-Color-Syles
 REcaptcha-Key-Fields
+*Add premium themes - for the Login which are ready to go 
+// create a directory with screenshots
+// on activate theme you change the options and everything 
+// you disable or restart certain buttons 
+// but it has to go through the same process ofcource
+// all you do is hold the css and html files of those themes 
+// but make sure that the style naming is the same to reflect
+// change afterwards as needed 
+// it is a really cool project afterwards
+// use objects and regexps and css tokenizers 
+// use alot of forms of concepts that you can use 
+// make sure to make it reactive and fun
+// wish you all the best

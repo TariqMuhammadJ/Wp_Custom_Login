@@ -44,6 +44,11 @@ if(!class_exists('Wp_Custom_Login')){
         return self::$instance;
     }
 
+    public function locate_parts($slug, $args1 = [], $args2 = []){
+        //extract($args1);
+        //extract($args2);
+        include Wp_Custom_Drive . "/parts/$slug.php";
+    }
 
     public function locate_template($slug){
         $path = Wp_Custom_Drive . "/templates/{$slug}.php";

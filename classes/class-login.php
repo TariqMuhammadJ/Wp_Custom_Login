@@ -20,8 +20,10 @@ if(!class_exists('Custom_Login')){
             add_filter('retrieve_password_message', array($this, 'render_email_template'), 4);
             add_filter('retrieve_password_title', array($this, 'retrieve_title'), 2);
             add_filter('wp_mail_content_type', array($this, 'mail_type'),);
+          
         }
 
+       
         public function render_email_template($message, $key, $user_login, $user_data){
             global $Wp_Custom_Login;
             $reset_link = network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login');
@@ -115,10 +117,12 @@ if(!class_exists('Custom_Login')){
                 
             $result = json_decode($response_body, true);
             if(empty($result['success'])){
+                error_log('false success');
                  return false;
 
             }
             else{
+                error_log('you have successfully verified');
                 return true;
             }
         }

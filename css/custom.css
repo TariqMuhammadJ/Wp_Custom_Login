@@ -1,18 +1,10 @@
 /* === Custom WordPress Login Styling === */
 
 /* Responsive tweak */
-@media (max-width: 400px) {
-    .login form {
-        padding: 20px 15px;
-    }
 
-    .login h1 a {
-        width: 180px;
-        height: 80px;
-    }
-}
 
-            
+
+
 
 .g-recaptcha {
     margin-top: 1vw;

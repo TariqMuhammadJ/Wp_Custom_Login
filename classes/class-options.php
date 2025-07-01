@@ -1,9 +1,19 @@
 <?php 
 if (!class_exists('Class_Options')) {
     class Class_Options {
+        // make all the class instances and insert them - you can optionally use an array
+        // but make the instances seen
+        //
 
         public static function custom_options() {
-
+           /* $strings =  "body.login{background:$black}";
+            echo "<style>
+            $strings
+            $_ENV
+            $walk // you can use this mode of work
+            
+            </style>"
+            */
             $options = get_option('custom_login_options');
             $logo = !empty($options['login_logo']) 
                 ? esc_url($options['login_logo']) 
@@ -15,9 +25,9 @@ if (!class_exists('Class_Options')) {
 
             $clip = 'circle(50% at center)';
             // use objects and styles for better reference
-            
-
-            echo "<style>
+            // you can 
+            // make these selectors default
+            /*echo "<style>
                 body.login {
                     font-family: 'Segoe UI', Tahoma, sans-serif;
                     background-color: $bg_color;
@@ -97,7 +107,7 @@ if (!class_exists('Class_Options')) {
                 .login #login h1 {
                     margin-bottom: 0;
                 }
-            </style>";
+            </style>"; */
         }
     }
 

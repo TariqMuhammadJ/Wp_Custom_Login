@@ -20,6 +20,7 @@
                 settings_fields('second_login_group');
                 do_settings_fields('custom_login', 'secondary_section');
                 submit_button();
+                do_action('encrypted_details');
                 ?>
             </form>
         </div>
