@@ -6,14 +6,24 @@
 
     <div class="main-section-bar">
         <div class="settings-bar">
-            <form method="post" action="options.php">
+            <form method="post" action="options.php" class="form-table">
                 <?php
+                //do_settings_fields('custom_login_group', 'main_section');
                 settings_fields('custom_login_group');
-                do_settings_sections('custom_login');
+                do_settings_fields('custom_login', 'main_section');
+                submit_button();
+                ?>
+            </form>
+            <form method="post" action="options.php" class="form-table">
+                <?php
+                //do_settings_fields('custom_login_group', 'main_section');
+                settings_fields('second_login_group');
+                do_settings_fields('custom_login', 'secondary_section');
                 submit_button();
                 ?>
             </form>
         </div>
+
         <div class="iframe-bar">
             <iframe
                 src="<?php echo wp_login_url(); ?>"

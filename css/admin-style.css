@@ -25,30 +25,13 @@ h2{
 .form-table{
     width: 100%;
     box-sizing: border-box;
-    padding:2vw;
+}
+.form-table input:not([type='submit']) {
+    width: 100%;
+    margin-top: 1vw;    
 }
 
 
-.form-table th{
-    color:var(--color);
-    padding:var(--input-padding);
-}
-
-.form-table td{
-    padding:var(--input-padding);
-}
-
-.form-table td input[type="text"]{
-    background-color: var(--input-background);
-    padding:var(--input-padding);
-    color:var(--color);
-    border:var(--input-border); 
-}
-
-.form-table td input[type="button"]{
-    background-color: var(--button-input-color);
-    color:var(--color);
-}
 
 
 .main-section-bar{

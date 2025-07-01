@@ -2,7 +2,7 @@
 if(!defined('ABSPATH')) exit;
 
 if(!class_exists('Encryptor')){
-    require_once $Wp_Custom_Login->locateFile("encrypt");
+    require_once __DIR__ . '/class-encrypt.php';
     class Encryptor implements EncryptorInterface{
         private string $key;
         private string $method;

@@ -1,6 +1,7 @@
 <?php 
 
 if(!class_exists('Custom_Login')){
+    require_once __DIR__ . '/class-encryptor.php';
     class Custom_Login{
         private $file_path;
         private $recaptcha_keys;
@@ -11,15 +12,14 @@ if(!class_exists('Custom_Login')){
             $this->recaptcha_keys = require __DIR__ . '/class-config.php';
             $this->include();
             $this->decryptor = new Encryptor(secret_key);
-            require_once $Wp_Custom_Login->locateFile('encryptor');
             //add_action('login_init', array($this, 'load_scripts'));
             add_action('login_enqueue_scripts', array($this, 'load_scripts'));
-            add_action('login_form', array($this, 'add_recaptcha_field'), 10);
+            add_action('login_form', array($this, 'add_recaptcha_field'),);
             add_action('login_head', array('Class_Options', 'custom_options'));
             add_filter('authenticate', array($this, 'authenticate_user'), 20, 3);
-            add_filter('retrieve_password_message', array($this, 'render_email_template'), 30, 4);
-            add_filter('retrieve_password_title', array($this, 'retrieve_title'), 35, 2);
-            add_filter('wp_mail_content_type', array($this, 'mail_type'), 31);
+            add_filter('retrieve_password_message', array($this, 'render_email_template'), 4);
+            add_filter('retrieve_password_title', array($this, 'retrieve_title'), 2);
+            add_filter('wp_mail_content_type', array($this, 'mail_type'),);
         }
 
         public function render_email_template($message, $key, $user_login, $user_data){
@@ -83,9 +83,9 @@ if(!class_exists('Custom_Login')){
 
 
         public function add_recaptcha_field(){
-            $option = get_option('custom_login_options');
-            $site_key = $option['recaptcha_key'];
-            if(!empty($site_key)){
+            $options = get_option('second_login_options');
+            $site_key = $options['recaptcha_key'] ?? "";
+
                 if(isset($site_key)){
                 error_log(esc_attr($site_key));
                 echo '<div class="g-recaptcha" data-sitekey="'. esc_attr($site_key) . '"></div>';
@@ -96,43 +96,51 @@ if(!class_exists('Custom_Login')){
 
 
             }
-            else {
-                return;
-            }
-            }
+           
             
-
-       
-
-        public function authenticate_user($user, $username, $password){
-            $secret_key = get_option('SECRET_RECAPTCHA_KEY');
-            $secret = $this->decryptor->decrypt($secret_key);
-            if(!empty($secret)){
-                if(isset($_POST['g-recaptcha-response'])){
-                $recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
-                $option = get_option('custom_login_options');
-                $secret_key = $option['recaptcha_secret'];
-                $value = base64_decode($secret_key);
-                $iv = substr($value, 0 , iv_length);
-                $encrypted_data = substr($value, iv_length);
-                $decrypted_key = openssl_decrypt($encrypted_data, cipher, secret_key, 0, $iv);
-
-                $response = wp_remote_post('https://google.com/recaptcha/api/siteverify', [
+        public function verifyRecaptcha($recaptcha_secret, $recaptcha_response){
+            $response = wp_remote_post('https://google.com/recaptcha/api/siteverify', [
                     'body' => [
-                        'secret' => $decrypted_key,
+                        'secret' => $recaptcha_secret,
                         'response' => $recaptcha_response,
                         'remoteip' => $_SERVER['REMOTE_ADDR'],
                     ]
                     ]);
 
-                $response_body = wp_remote_retrieve_body($response);
-                $result = json_decode($response_body, true);
-                if(empty($result['success'])){
-                    return new Wp_Error('recaptcha failed', __('ReCaptcha Failed', 'custom-login'));
-                }
+            $response_body = wp_remote_retrieve_body($response);
+                
+            $result = json_decode($response_body, true);
+            if(empty($result['success'])){
+                 return false;
 
             }
             else{
+                return true;
+            }
+        }
+
+       // I forgot to check if the site_key is initialized
+
+        public function authenticate_user($user, $username, $password){
+            $secret_key = secret_key;
+            error_log("Your secret key is : {$secret_key}");
+            $option = get_option('second_login_options');
+            if(!empty($secret_key) && !empty($option['recaptcha_secret'])){
+                if(isset($_POST['g-recaptcha-response'])){
+                $recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
+                $key = $option['recaptcha_secret'];
+                $recaptcha_secret = $this->decryptor->decrypt($key);
+                error_log("Your Recaptcha secret is {$recaptcha_secret}");
+                if($this->verifyRecaptcha($recaptcha_secret, $recaptcha_response)){
+                     return wp_authenticate_username_password(null, $username, $password);
+
+                }
+                else {
+                    return new WP_Error('recaptcha failed', __('ReCaptcha Failed', 'custom-login'));
+                }
+
+            }
+            else {
                 return new WP_Error('recaptcha_missing', __('Please complete the reCAPTCHA.', 'custom-login'));
             }
 
@@ -143,11 +151,8 @@ if(!class_exists('Custom_Login')){
             return wp_authenticate_username_password(null, $username, $password);
                 
         }
-         else {
-            return wp_authenticate_username_password(null, $username, $password);
-         }
             
-            }
+      }
 
             
 

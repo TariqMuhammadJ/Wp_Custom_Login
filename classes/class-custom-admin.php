@@ -1,7 +1,6 @@
 <?php
-require_once $Wp_Custom_Login->locateFile('encryptor');
-
 if (!class_exists('Custom_Admin')) {
+    require __DIR__ . '/class-encryptor.php';
     class Custom_Admin {
         private $encryptor;
 
@@ -11,25 +10,38 @@ if (!class_exists('Custom_Admin')) {
             add_action('admin_init', array($this, 'register_settings'));
             add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
             add_action('admin_notices', array($this, 'settings_update_notice'));
-            add_filter('sanitize_option_custom_login_options', [$this,'validate_keys'], 10, 1);
+            add_filter('pre_update_option_second_login_options', [$this,'validate_keys'], 10,  2);
             // we will work with this later add_action('phpmailer_init', array($this, 'custom_configuration'));
         }
 
 
-        public function validate_keys($options){
-
-            if(isset($options['recaptcha_secret'])){
-                $key = $options['recaptcha_secret'];
-                $sanitized_key = $this->encryptor->encrypt($key);
-                $options['recaptcha_secret'] = $sanitized_key;
-
-
-
-
+      
+      public function validate_keys($new_value, $old_value) {
+        if ($old_value === false) {
+            // First time save, always encrypt
+            if (!empty($new_value['recaptcha_secret'])) {
+                $new_value['recaptcha_secret'] = $this->encryptor->encrypt($new_value['recaptcha_secret']);
+                error_log($new_value['recaptcha_secret']);
             }
-
-            return $options;
+            return $new_value;
+        } else {
+            if (
+                isset($old_value['recaptcha_secret'], $new_value['recaptcha_secret']) &&
+                $old_value['recaptcha_secret'] === $new_value['recaptcha_secret']
+            ) {
+                // Key did not change; keep old encrypted key
+                $new_value['recaptcha_secret'] = $old_value['recaptcha_secret'];
+            } else {
+                // Key changed; encrypt new key
+                if (!empty($new_value['recaptcha_secret'])) {
+                    $new_value['recaptcha_secret'] = $this->encryptor->encrypt($new_value['recaptcha_secret']);
+                }
+            }
+            return $new_value;
         }
+}
+
+
         
 
         public function settings_update_notice(){
@@ -38,8 +50,6 @@ if (!class_exists('Custom_Admin')) {
 
         public function enqueue_admin_styles($hook) {
             if ($hook !== 'toplevel_page_Custom_Login') return;
-
-            // Ensure this constant is defined OR replace with plugin_dir_url
             wp_enqueue_style(
                 'admin-style',
                 Wp_Custom_Url . '/css/admin-style.css',
@@ -69,10 +79,22 @@ if (!class_exists('Custom_Admin')) {
                 'dashicons-lock',                // Icon
                 81                               // Position
             );
+            /*add_submenu_page(
+                'Custom_Login',                // parent slug (MUST match main menu slug)
+                'Secondary Settings',          // page title (shown in browser title)
+                'Secondary Settings',          // menu title (shown in sidebar)
+                'manage_options',              // capability
+                'custom_login_secondary',      // submenu slug
+                [$this, 'secondary_settings_page'] // callback function
+            );
+            */
+           
+
         }
 
         public function register_settings() {
             register_setting('custom_login_group', 'custom_login_options'); // ask what this does
+            register_setting('second_login_group', 'second_login_options');
 
             add_settings_section(
                 'main_section',
@@ -80,6 +102,28 @@ if (!class_exists('Custom_Admin')) {
                 null,
                 'custom_login'
             );
+
+            add_settings_section(
+                'secondary_section',         // ID
+                'Secondary Settings', // Title
+                null,    // Optional callback function to display description
+                'custom_login',
+                );
+                
+            
+            $fields_2 = [
+                
+             [
+                    'id' => 'recaptcha_secret',
+                    'title' => 'Recaptcha Secret Key',
+                    'type' => 'recaptcha_secret_key'
+             ],[
+                    'id' => 'recaptcha_key',
+                    'title' => 'Recaptcha Site Key',
+                    'type' => 'recaptcha_key'
+                ]
+            ];
+
 
             $fields = [
                 [
@@ -96,16 +140,6 @@ if (!class_exists('Custom_Admin')) {
                     'id' => 'background_color',
                     'title' => 'BG Color',
                     'type' => 'background-color'
-                ],
-                [
-                    'id' => 'recaptcha_key',
-                    'title' => 'Recaptcha Site Key',
-                    'type' => 'recaptcha_key'
-                ],
-                [
-                    'id' => 'recaptcha_secret',
-                    'title' => 'Recaptcha Secret Key',
-                    'type' => 'recaptcha_secret_key'
                 ]
                 ];
 
@@ -120,6 +154,24 @@ if (!class_exists('Custom_Admin')) {
                     );
                 }
 
+                foreach($fields_2 as $field){
+                    add_settings_field(
+                        $field['id'],
+                        $field['title'],
+                        [$this, 'render_fields_2'],
+                        'custom_login',
+                        'secondary_section',
+                        $field
+                    );
+                }
+
+        }
+
+        public function render_fields_2($field){
+            $options = get_option('second_login_options');
+            $id = $field['id'];
+            $value = isset($options[$id]) ? esc_attr($options[$id]) : '';
+            echo "<input type='text' name='second_login_options[$id]' id='{$id}' value='$value' class='regular-text' />";
         }
 
         public function render_fields($field) {
@@ -156,6 +208,8 @@ if (!class_exists('Custom_Admin')) {
             global $Wp_Custom_Login;
             include $Wp_Custom_Login->locate_template('custom-settings');
         }
+
+        
     }
 
 }
