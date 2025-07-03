@@ -32,9 +32,26 @@ elseif($type == "background-color") {
     echo "<input type='text' name='custom_login_options[$id]' id='accent_color' value='$value' class='my-color-field' 
     data-default-color='#ff6600' />";
 }
-else{
-    echo "<input type='text' name='custom_login_options[$id]' id='{$id}' value='$value' class='regular-text' />";
-}
+elseif ($field['type'] === 'form_color') {
+        echo "<select name='custom_login_options[$id]' id='{$id}'>";
+        $colors = [
+            '' => 'Select Color',
+            '#ffffff' => 'White',
+            '#f1f1f1' => 'Light Gray',
+            '#000000' => 'Black',
+            '#0073aa' => 'WordPress Blue',
+            '#ff6600' => 'Orange',
+        ];
+        foreach ($colors as $color_value => $label) {
+            $selected = selected($value, $color_value, false);
+            echo "<option value='" . esc_attr($color_value) . "' $selected>$label</option>";
+        }
+        echo "</select>";
+    }
+    else {
+        // fallback to default text field
+        echo "<input type='text' name='custom_login_options[$id]' id='{$id}' value='$value' class='regular-text' />";
+    }
 
 
 ?>

@@ -155,6 +155,27 @@ if (!class_exists('Custom_Admin')) {
                     'id' => 'background_color',
                     'title' => 'BG Color',
                     'type' => 'background-color'
+                ],
+                [
+                    'id' => 'form_color',
+                    'title' => 'Form Color',
+                    'type' => 'form_color'
+                ],
+                [
+                    'id' => 'animations',
+                    'title' => 'Form Animations',
+                    'type' => 'form_animations',
+                ],
+                [
+                    'id' => 'recaptcha_error_msg',
+                    'title' => 'recaptcha message',
+                    'type' => 'recaptcha_message'
+                ],
+                [
+                    'id' => 'recaptcha_failed_msg',
+                    'title' => 'reCAPTCHA Failed Message',
+                    'type' => 'recaptcha_message'
+
                 ]
                 ];
 

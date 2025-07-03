@@ -1,8 +1,5 @@
 <div class="admin-wrap">
-    <div class="welcome-section">
-        <h1>Custom Login Settings</h1>
-        <p>Hey, how are all of you guys doing?</p>
-    </div>
+   
 
     <div class="main-section-bar">
         <div class="settings-bar">

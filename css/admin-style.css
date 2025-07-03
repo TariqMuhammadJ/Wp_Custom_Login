@@ -1,49 +1,103 @@
-.admin-wrap{
-    background-color:black;
+.admin-wrap {
+    background-color: #121212;
     box-sizing: border-box;
-    padding:2vw;
-    color:white;
-    height:100vh;
+    padding: 2vw;
+    color: white;
+    min-height: 100vh;
     overflow-y: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
-
-
-.main-section-bar{
+.main-section-bar {
     display: flex;
-    height:100%;
+    flex-wrap: wrap; /* allow stacking on small screens */
+    gap: 2vw;
+    height: 100%;
 }
 
-
-.settings-bar{
-    flex:1;
-    background-color: rgb(71, 71, 149);
+.settings-bar {
+    flex: 1;
+    background: linear-gradient(135deg, #4b6cb7, #182848);
     box-sizing: border-box;
-    padding:3vw;
-    width:max-content;
-    overflow-y: scroll;
+    padding: 2vw;
+    border-radius: 12px;
+    color: #f0f0f0;
+    overflow-y: auto;
+    min-width: 280px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.iframe-bar{
-    flex:1.5;
+.settings-bar:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-5px);
 }
 
-.form-table{
+.iframe-bar {
+    flex: 2;
+    background: #1f1f1f;
+    border-radius: 12px;
+    padding: 2vw;
+    min-height: 400px;
+    transition: box-shadow 0.3s ease;
+}
+
+.iframe-bar:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.form-table {
+    width: 100%;
+}
+
+.form-table input[type="text"],
+.form-table input[type="number"],
+.form-table select {
+    width: 100%;
+    margin-top: 0.5vw;
+    margin-bottom: 1.2vw;
+    padding: 0.8vw;
+    border: none;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: #2c2c2c;
+    color: #fff;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-table input[type="text"]:focus,
+.form-table input[type="number"]:focus,
+.form-table select:focus {
+    outline: none;
+    background-color: #3a3a3a;
+    box-shadow: 0 0 0 2px #4b6cb7;
+}
+
+input[type="hidden"] {
+    width: 100%;
+}
+
+.image-upload-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wp-picker-container{
     width:100%;
 }
 
-.form-table input[type="text"]{
-    width:100%;
-    margin-top:0.1vw;
-    margin-bottom:1vw;
-}
-
-input{
+#form_color{
     width:100%;
 }
 
+@media (max-width: 900px) {
+    .main-section-bar {
+        flex-direction: column;
+    }
 
-input[type="hidden"]{
-    width:100%;
+    .settings-bar,
+    .iframe-bar {
+        min-width: 100%;
+    }
 }

@@ -12,9 +12,6 @@ $bg_image = !empty($options['bg_image']) ? esc_url($options['bg_image']) : '';
 $logo     = !empty($options['login_logo']) ? esc_url($options['login_logo']) : '';
 
 $options = get_option('custom_login_options');
-echo '/* DEBUG OPTIONS: ';
-var_export($options);
-echo ' */';
 
 ?>
 

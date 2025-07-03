@@ -5,11 +5,12 @@ if (!class_exists('Class_Options')) {
 
 
         public function __construct(){
-            $this->enqueue_ajax();
-            add_action('wp_ajax_my_login_styles', [$this, 'verify_ajax']);
+            //$this->enqueue_ajax();
+            //add_action('wp_ajax_my_login_styles', [$this, 'verify_ajax']);
+            add_filter('wp_login_errors', [$this, 'modify_recaptcha_message'], 9, 2);
         }
 
-        public function enqueue_ajax(){
+      /*  public function enqueue_ajax(){
             wp_enqueue_script(
                 'my_login_styles',
                 Wp_Custom_Drive . '/js/custom-css.js',
@@ -26,8 +27,23 @@ if (!class_exists('Class_Options')) {
         }
 
         public function verify_ajax(){
+            
+
+        }
+        */
 
 
+        public function modify_recaptcha_message($errors, $redirect_to){
+            $options = get_option('custom_login_options');
+            $message = isset($options['recaptcha_error_msg']) ? esc_attr($options['recaptcha_error_msg']) : "Recaptcha Missing";
+            if($errors->get_error_codes()){
+                if($errors->get_error_message('recaptcha_missing', 'custom-login')){
+                    $errors->remove('recaptcha_missing', 'custom-login');
+                    $errors->add('recaptcha_missing', __($message, 'custom-login'));
+
+                }
+            }
+            return $errors;
 
         }
 
@@ -41,14 +57,24 @@ if (!class_exists('Class_Options')) {
             <?php endif; ?>
             <?php if (isset($options['bg_image'])): ?>
                 background-image: url(<?php echo esc_url($options['bg_image']); ?>);
+                background-size:cover
             <?php endif; ?>
-            background-size:cover;
+            
         }
         body.login h1 a {
             <?php if(isset($options['login_logo'])) : ?> 
                 background-image:url(<?php echo esc_url($options['login_logo']); ?>);
             <?php endif; ?>
         }
+
+        #loginform {
+            <?php if(isset($options['form_color'])) : ?>
+                background-color:<? echo esc_attr($options['form_color']) ; ?>;
+
+            <?php endif; ?>
+
+         }
+
         /* Add more CSS rules here */
         </style>
         <?php
