@@ -182,7 +182,7 @@ if (!class_exists('Custom_Admin')) {
                 foreach($fields as $field){
                     add_settings_field(
                         $field['id'],
-                        $field['title'],
+                        '',
                         [$this, 'render_fields'],
                         'custom_login',
                         'main_section', 

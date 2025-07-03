@@ -10,6 +10,7 @@
                 do_settings_fields('custom_login', 'main_section');
                 submit_button();
                 ?>
+                <button>Reset changes</button>
             </form>
             <form method="post" action="options.php" class="form-table">
                 <?php

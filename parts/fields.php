@@ -11,8 +11,10 @@ if (!$field) {
  
 $id = $field['id'];
 $type = $field['type'];
+$title = $field['title'];
 $value = isset($options[$id]) ? esc_attr($options[$id]) : '';
 if ($type == 'login_logo') {
+    echo "<p class='setting_title'>$title</p>";
     echo "<input type='text' id='{$id}' name='custom_login_options[$id]' value='$value' class='regular-text' />";
     echo '<input type="button" class="button select-media-button" value="Select Image" />';
     if ($value) {
@@ -20,6 +22,7 @@ if ($type == 'login_logo') {
     }
 }
 elseif ($type == "bg_image") {
+    echo "<p class='setting_title'>$title</p>";
     echo "<input type='text' id='{$id}' name='custom_login_options[$id]' value='$value' class='regular-text' />";
     echo "<input type='button' class='button select-media-button' value='Select Image' />";
     if ($value) {
@@ -29,10 +32,12 @@ elseif ($type == "bg_image") {
 }
 elseif($type == "background-color") {
     // Default input for background color or other fields
+    echo "<p class='setting_title'>$title</p>";
     echo "<input type='text' name='custom_login_options[$id]' id='accent_color' value='$value' class='my-color-field' 
     data-default-color='#ff6600' />";
 }
 elseif ($field['type'] === 'form_color') {
+        echo "<p class='setting_title'>$title</p>";
         echo "<select name='custom_login_options[$id]' id='{$id}'>";
         $colors = [
             '' => 'Select Color',
@@ -50,8 +55,12 @@ elseif ($field['type'] === 'form_color') {
     }
     else {
         // fallback to default text field
+        
+        
+        
         echo "<input type='text' name='custom_login_options[$id]' id='{$id}' value='$value' class='regular-text' />";
     }
+
 
 
 ?>
