@@ -44,6 +44,6 @@ input{
 }
 
 
-
-
-
+input[type="hidden"]{
+    width:100%;
+}

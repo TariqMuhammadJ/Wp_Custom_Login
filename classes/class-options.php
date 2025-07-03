@@ -1,116 +1,60 @@
 <?php 
 if (!class_exists('Class_Options')) {
     class Class_Options {
-        // make all the class instances and insert them - you can optionally use an array
-        // but make the instances seen
-        //
+        
 
-        public static function custom_options() {
-           /* $strings =  "body.login{background:$black}";
-            echo "<style>
-            $strings
-            $_ENV
-            $walk // you can use this mode of work
-            
-            </style>"
-            */
-            $options = get_option('custom_login_options');
-            $logo = !empty($options['login_logo']) 
-                ? esc_url($options['login_logo']) 
-                : Wp_Custom_Url . '/images/hopreneur.jpg';
 
-            $bg_color = !empty($options['background_color']) 
-                ? sanitize_hex_color($options['background_color']) 
-                : '#000000';
-
-            $clip = 'circle(50% at center)';
-            // use objects and styles for better reference
-            // you can 
-            // make these selectors default
-            /*echo "<style>
-                body.login {
-                    font-family: 'Segoe UI', Tahoma, sans-serif;
-                    background-color: $bg_color;
-                }
-
-                .login h1 a {
-                    background-image: url('$logo');
-                    background-size: contain;
-                    width: 220px;
-                    height: 100px;
-                    display: block;
-                    background-color: black;
-                    clip-path: $clip;
-                }
-
-                .login form {
-                    background: #ffffff;
-                    border: 1px solid #ddd;
-                    padding: 26px 24px;
-                    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-                    border-radius: 12px;
-                    max-width: 360px;
-                    margin: 0 auto;
-                }
-
-                .login form .input, 
-                .login input[type='text'],
-                .login input[type='password'] {
-                    font-size: 16px;
-                    padding: 10px;
-                    border: 1px solid #ccc;
-                    border-radius: 6px;
-                    width: 100%;
-                    margin-top: 5px;
-                    box-sizing: border-box;
-                }
-
-                .login label {
-                    font-weight: 600;
-                    color: #333;
-                }
-
-                .wp-core-ui .button-primary {
-                    background: #0073aa;
-                    border: none;
-                    border-radius: 6px;
-                    font-size: 16px;
-                    padding: 10px;
-                    width: 100%;
-                    transition: background 0.3s ease;
-                }
-
-                .wp-core-ui .button-primary:hover {
-                    background: #006799;
-                }
-
-                #nav, #backtoblog {
-                    text-align: center;
-                    margin-top: 20px;
-                }
-
-                #nav a, #backtoblog a {
-                    color: #ffffff !important;
-                    text-decoration: underline;
-                    font-weight: 500;
-                }
-
-                .login .message,
-                .login .success,
-                .login .error {
-                    border-left: 4px solid #0073aa;
-                    padding: 12px;
-                    margin-bottom: 20px;
-                    border-radius: 6px;
-                }
-
-                .login #login h1 {
-                    margin-bottom: 0;
-                }
-            </style>"; */
+        public function __construct(){
+            $this->enqueue_ajax();
+            add_action('wp_ajax_my_login_styles', [$this, 'verify_ajax']);
         }
-    }
+
+        public function enqueue_ajax(){
+            wp_enqueue_script(
+                'my_login_styles',
+                Wp_Custom_Drive . '/js/custom-css.js',
+                [],
+                Wp_Custom_Version,
+                true
+            );
 
 
+            wp_localize_script('my_login_styles', 'myLoginAjax', [
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('login_style_nonce')
+            ]);
+        }
+
+        public function verify_ajax(){
+
+
+
+        }
+
+        public static function custom_css(){
+        $options = get_option('custom_login_options');
+        ?>
+        <style type="text/css">
+        body.login {
+            <?php if (isset($options['background_color'])): ?>
+                background-color: <?php echo esc_attr($options['background_color']); ?>;
+            <?php endif; ?>
+            <?php if (isset($options['bg_image'])): ?>
+                background-image: url(<?php echo esc_url($options['bg_image']); ?>);
+            <?php endif; ?>
+            background-size:cover;
+        }
+        body.login h1 a {
+            <?php if(isset($options['login_logo'])) : ?> 
+                background-image:url(<?php echo esc_url($options['login_logo']); ?>);
+            <?php endif; ?>
+        }
+        /* Add more CSS rules here */
+        </style>
+        <?php
 }
+    }
+}
+
+
 ?>

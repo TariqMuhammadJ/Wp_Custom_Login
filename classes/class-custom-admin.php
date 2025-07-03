@@ -194,7 +194,7 @@ if (!class_exists('Custom_Admin')) {
         //set_query_var('args',$options);
         //set_query_var('field', $field);
         global $Wp_Custom_Login;
-        $Wp_Custom_Login->locate_parts('fields', $options, $field);
+        require $Wp_Custom_Login->locate_parts('fields', $options, $field);
 
         
     }

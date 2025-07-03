@@ -15,13 +15,15 @@ if(!class_exists('Custom_Login')){
             //add_action('login_init', array($this, 'load_scripts'));
             add_action('login_enqueue_scripts', array($this, 'load_scripts'));
             add_action('login_form', array($this, 'add_recaptcha_field'),);
-            //add_action('login_head', array('Class_Options', 'custom_options'));
+            add_action('login_head', array('Class_Options', 'custom_css'));
             add_filter('authenticate', array($this, 'authenticate_user'), 20, 3);
             add_filter('retrieve_password_message', array($this, 'render_email_template'), 4);
             add_filter('retrieve_password_title', array($this, 'retrieve_title'), 2);
             add_filter('wp_mail_content_type', array($this, 'mail_type'),);
           
         }
+
+        
 
        
         public function render_email_template($message, $key, $user_login, $user_data){
@@ -70,8 +72,8 @@ if(!class_exists('Custom_Login')){
 
         public function load_scripts(){
         wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js', array());
-        wp_enqueue_style('custom-login-style',  Wp_Custom_Url . '/css/custom.css', array(), Wp_Custom_Version);
-        wp_dequeue_style('login');
+        //wp_enqueue_style('custom-login-style',  Wp_Custom_Url . '/css/custom.css', array(), Wp_Custom_Version);
+        //wp_dequeue_style('login');
         /*add_filter('login_errors', function($error){
     return 'Sorry, your login details are incorrect. Please try again!';
 }); */  //to change error text
