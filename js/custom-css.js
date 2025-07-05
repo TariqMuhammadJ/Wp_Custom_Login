@@ -6,3 +6,34 @@
 // create a submenu 
 
 
+const form_tables = {
+    table_1: document.querySelector("#table-1"),
+    table_2: document.querySelector("#table-2"),
+    menu_1: document.querySelector("#main"),
+    menu_2: document.querySelector("#second"),
+    start() {
+        this.menu_1.addEventListener("click", () => this.hide1());
+        this.menu_2.addEventListener("click", () => this.hide2());
+        this.table_2.classList.add("hide");
+    },
+
+    hide2(){
+         this.table_1.classList.add("hide");
+         this.table_2.classList.remove("hide");
+    },
+
+    hide1(){
+        this.table_1.classList.remove("hide");
+        this.table_2.classList.add("hide");
+    }
+
+    
+
+    
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    form_tables.start();
+})
+
+

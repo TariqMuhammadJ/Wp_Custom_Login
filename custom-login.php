@@ -40,11 +40,16 @@ if(!class_exists('Wp_Custom_Login')){
             self::$instance->admin_settings = new Custom_Admin();
             self::$instance->login_page = new Custom_Login();
             self::$instance->options = new Class_Options();
+            //self::$instance->styles = add_action('login_head', [self::$instance, 'main_style']);
         }
 
         return self::$instance;
     }
 
+    /*public function main_style(){
+        wp_enqueue_style('login_style', Wp_Custom_Drive . '/classes/class-options-css.php');
+
+    }*/
     public function locate_parts($slug, $args1 = [], $args2 = []){
         //extract($args1);
         //extract($args2);

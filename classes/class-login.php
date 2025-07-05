@@ -72,11 +72,6 @@ if(!class_exists('Custom_Login')){
 
         public function load_scripts(){
         wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js', array());
-        //wp_enqueue_style('custom-login-style',  Wp_Custom_Url . '/css/custom.css', array(), Wp_Custom_Version);
-        //wp_dequeue_style('login');
-        /*add_filter('login_errors', function($error){
-    return 'Sorry, your login details are incorrect. Please try again!';
-}); */  //to change error text
         add_filter('login_headerurl', function () {
             return home_url();
         } );

@@ -103,3 +103,26 @@ input[type="hidden"] {
         min-width: 100%;
     }
 }
+
+
+.menu-settings{
+    width:100%;
+}
+
+.menu-settings ul{
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu-settings ul li{
+    width: max-content;
+    background-color: rgb(55, 55, 105);
+    padding:0.5rem;
+    cursor: pointer;
+}
+
+.hide{
+    display: none;
+}
+
+

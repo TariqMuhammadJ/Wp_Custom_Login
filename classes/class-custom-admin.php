@@ -82,6 +82,14 @@ if (!class_exists('Custom_Admin')) {
                 '1.0',
                 true
             );
+
+            wp_enqueue_script(
+                'custom_css',
+                Wp_Custom_Url . '/js/custom-css.js',
+                [],
+                Wp_Custom_Version,
+                true
+            );
         }
 
         public function admin_menu() {

@@ -56,3 +56,36 @@ add_action('admin_notices', function() {
 
 
             admin_notices hook for the main admin bar
+
+
+
+**wp_enqueue_style('custom-login-style',  Wp_Custom_Url . '/css/custom.css', array(), Wp_Custom_Version);
+**wp_dequeue_style('login');
+**add_filter('login_errors', function($error){
+    return 'Sorry, your login details are incorrect. Please try again!';
+}); */  //to change error text
+
+
+
+
+**set_query_var('args',$options);
+**set_query_var('field', $field);
+
+**do_settings_fields('custom_login_group', 'main_section');
+
+
+**add_action('login_init', array($this, 'load_scripts'));
+
+**function add_custom_query_vars($vars) {
+    $vars[] = 'color';
+    return $vars;
+}
+add_filter('query_vars', 'add_custom_query_vars');
+
+**$color = get_query_var('color');
+
+**$url = add_query_arg('color', 'red', home_url('/shop'));
+**echo $url;
+// Output: https://example.com/shop?color=red
+
+
