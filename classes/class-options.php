@@ -79,8 +79,11 @@ if (!class_exists('Class_Options')) {
             <?php endif; ?>
             <?php if (isset($options['bg_image'])): ?>
                 background-image: url(<?php echo esc_url($options['bg_image']); ?>);
-                background-size:cover
+                background-size:cover;
+                
+                
             <?php endif; ?>
+            
             
         }
         body.login h1 a {
@@ -94,8 +97,17 @@ if (!class_exists('Class_Options')) {
                 background-color:<? echo esc_attr($options['form_color']) ; ?>;
 
             <?php endif; ?>
+            padding:4vw;
 
          }
+
+         #login{
+            background-color: black;
+         }
+
+        
+
+    
 
         /* Add more CSS rules here */
         </style>

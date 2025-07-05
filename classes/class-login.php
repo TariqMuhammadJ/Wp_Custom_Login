@@ -12,7 +12,6 @@ if(!class_exists('Custom_Login')){
             $this->recaptcha_keys = require __DIR__ . '/class-config.php';
             $this->include();
             $this->decryptor = new Encryptor(secret_key);
-            //add_action('login_init', array($this, 'load_scripts'));
             add_action('login_enqueue_scripts', array($this, 'load_scripts'));
             add_action('login_form', array($this, 'add_recaptcha_field'),);
             add_action('login_head', array('Class_Options', 'custom_css'));

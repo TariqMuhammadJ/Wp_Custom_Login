@@ -7,6 +7,7 @@
                 <ul>
                     <li id="main">Main Options</li>
                     <li id="second">Secondary</li>
+                    <li id="third">third</li>
                 </ul>
             </div>
             <form method="post" action="options.php" class="form-table" id="table-1">
@@ -27,19 +28,28 @@
                 do_action('encrypted_details');
                 ?>
             </form>
-        </div>
+            <form action="post" class="form-table" id="table-3">
+                <?php 
 
-        <div class="iframe-bar">
-            <img src="<?php echo Class_Options::getLive(wp_login_url()); ?>" alt="">
+                settings_fields('form_color');
+                do_settings_fields('custom_login', 'third_section');
+                submit_button();
 
+                ?>
+            </form>
         </div>
 
         <!--<div class="iframe-bar">
+            <img src="<?php echo Class_Options::getLive(wp_login_url()); ?>" alt="">
+
+        </div>-->
+
+        <div class="iframe-bar">
             <iframe
                 src="<?php echo wp_login_url(); ?>"
                 width="100%"
                 height="600"
                 style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);"></iframe>
-        </div> -->
+        </div> 
     </div>
 </div>

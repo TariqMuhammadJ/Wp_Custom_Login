@@ -33,12 +33,12 @@ elseif ($type == "bg_image") {
 elseif($type == "background-color") {
     // Default input for background color or other fields
     echo "<p class='setting_title'>$title</p>";
-    echo "<input type='text' name='custom_login_options[$id]' id='accent_color' value='$value' class='my-color-field' 
+    echo "<input type='text' name='form_color[$id]' id='accent_color' value='$value' class='my-color-field' 
     data-default-color='#ff6600' />";
 }
 elseif ($field['type'] === 'form_color') {
         echo "<p class='setting_title'>$title</p>";
-        echo "<select name='custom_login_options[$id]' id='{$id}'>";
+        echo "<select name='form_color[$id]' id='{$id}'>";
         $colors = [
             '' => 'Select Color',
             '#ffffff' => 'White',

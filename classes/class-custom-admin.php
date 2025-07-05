@@ -118,6 +118,7 @@ if (!class_exists('Custom_Admin')) {
         public function register_settings() {
             register_setting('custom_login_group', 'custom_login_options'); // ask what this does
             register_setting('second_login_group', 'second_login_options');
+            register_setting('form_color', 'form_color_options');
 
             add_settings_section(
                 'main_section',
@@ -132,7 +133,12 @@ if (!class_exists('Custom_Admin')) {
                 null,    // Optional callback function to display description
                 'custom_login',
                 );
-                
+            add_settings_section(
+                'third_section',
+                'third settings',
+                null,
+                'custom_login'
+            );
             
             $fields_2 = [
                 
@@ -160,6 +166,20 @@ if (!class_exists('Custom_Admin')) {
                     'type' => 'login_logo'
                 ],
                 [
+                    'id' => 'recaptcha_error_msg',
+                    'title' => 'recaptcha message',
+                    'type' => 'recaptcha_message'
+                ],
+                [
+                    'id' => 'recaptcha_failed_msg',
+                    'title' => 'reCAPTCHA Failed Message',
+                    'type' => 'recaptcha_message'
+
+                ]
+                ];
+
+                $fields_3 = [
+                    [
                     'id' => 'background_color',
                     'title' => 'BG Color',
                     'type' => 'background-color'
@@ -173,19 +193,10 @@ if (!class_exists('Custom_Admin')) {
                     'id' => 'animations',
                     'title' => 'Form Animations',
                     'type' => 'form_animations',
-                ],
-                [
-                    'id' => 'recaptcha_error_msg',
-                    'title' => 'recaptcha message',
-                    'type' => 'recaptcha_message'
-                ],
-                [
-                    'id' => 'recaptcha_failed_msg',
-                    'title' => 'reCAPTCHA Failed Message',
-                    'type' => 'recaptcha_message'
-
-                ]
+                ]   
                 ];
+
+
 
                 foreach($fields as $field){
                     add_settings_field(
@@ -209,6 +220,18 @@ if (!class_exists('Custom_Admin')) {
                     );
                 }
 
+                foreach($fields_3 as $field){
+                    add_settings_field(
+                        $field['id'],
+                        '',
+                        [$this, 'render_fields'],
+                        'custom_login',
+                        'third_section',
+                        $field
+
+                    );
+                }
+
         }
 
         public function render_fields_2($field){
@@ -220,8 +243,6 @@ if (!class_exists('Custom_Admin')) {
 
         public function render_fields($field) {
         $options = get_option('custom_login_options');
-        //set_query_var('args',$options);
-        //set_query_var('field', $field);
         global $Wp_Custom_Login;
         require $Wp_Custom_Login->locate_parts('fields', $options, $field);
 
