@@ -89,3 +89,8 @@ add_filter('query_vars', 'add_custom_query_vars');
 // Output: https://example.com/shop?color=red
 
 
+
+
+
+
+<?php echo Class_Options::getLive(wp_login_url()); ?>" alt="">

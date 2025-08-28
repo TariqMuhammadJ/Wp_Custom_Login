@@ -119,6 +119,7 @@ if (!class_exists('Custom_Admin')) {
             register_setting('custom_login_group', 'custom_login_options'); // ask what this does
             register_setting('second_login_group', 'second_login_options');
             register_setting('form_color', 'form_color_options');
+            register_setting('text_errors', 'text_error_options');
 
             add_settings_section(
                 'main_section',
@@ -136,6 +137,13 @@ if (!class_exists('Custom_Admin')) {
             add_settings_section(
                 'third_section',
                 'third settings',
+                null,
+                'custom_login'
+            );
+
+            add_settings_section(
+                'fourth_section',
+                'Fourth settings',
                 null,
                 'custom_login'
             );
@@ -165,17 +173,20 @@ if (!class_exists('Custom_Admin')) {
                     'title' => 'Login Logo Url',
                     'type' => 'login_logo'
                 ],
-                [
-                    'id' => 'recaptcha_error_msg',
-                    'title' => 'recaptcha message',
-                    'type' => 'recaptcha_message'
-                ],
-                [
-                    'id' => 'recaptcha_failed_msg',
-                    'title' => 'reCAPTCHA Failed Message',
-                    'type' => 'recaptcha_message'
+            ];
 
-                ]
+                $fields_4 = [
+                        [
+                        'id' => 'recaptcha_error_msg',
+                        'title' => 'recaptcha message',
+                        'type' => 'recaptcha_message'
+                    ],
+                    [
+                        'id' => 'recaptcha_failed_msg',
+                        'title' => 'reCAPTCHA Failed Message',
+                        'type' => 'recaptcha_message'
+
+                    ]
                 ];
 
                 $fields_3 = [
@@ -230,6 +241,17 @@ if (!class_exists('Custom_Admin')) {
                         $field
 
                     );
+
+                }
+                foreach($fields_4 as $field){
+                    add_settings_section(
+                        $field['id'],
+                        '',
+                        [$this, 'render_fields'],
+                        'custom_login',
+                        'fourth_section',
+                        $field
+                    );
                 }
 
         }
@@ -243,14 +265,22 @@ if (!class_exists('Custom_Admin')) {
 
         public function render_fields($field) {
         $options = get_option('custom_login_options');
+        $options2 = get_option('text_error_options');
         global $Wp_Custom_Login;
-        require $Wp_Custom_Login->locate_parts('fields', $options, $field);
+        require $Wp_Custom_Login->locate_parts('fields', $options, $options2,  $field);
 
         
     }
 
         public function settings_page() {
             global $Wp_Custom_Login;
+            $url = add_query_arg(
+    [
+        'page' => 'Custom_Login',
+        'tab'  => 'advanced'
+    ],
+    admin_url()
+);
             include $Wp_Custom_Login->locate_template('custom-settings');
         }
 

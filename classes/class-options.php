@@ -71,6 +71,7 @@ if (!class_exists('Class_Options')) {
 
         public static function custom_css(){
         $options = get_option('custom_login_options');
+        $colors = get_option('form_color_options');
         ?>
         <style type="text/css">
         body.login {
@@ -84,28 +85,68 @@ if (!class_exists('Class_Options')) {
                 
             <?php endif; ?>
             
-            
         }
+
+        body.login h1{
+            border:2px solid white;
+            height: max-content;
+            text-align: center;
+            margin-top:0;
+        }
+
         body.login h1 a {
             <?php if(isset($options['login_logo'])) : ?> 
                 background-image:url(<?php echo esc_url($options['login_logo']); ?>);
             <?php endif; ?>
+            border:2px solid white;
         }
 
         #loginform {
-            <?php if(isset($options['form_color'])) : ?>
-                background-color:<? echo esc_attr($options['form_color']) ; ?>;
+            <?php if(isset($colors['form_color'])) : ?>
+                background-color:<? echo esc_attr($colors['form_color']) ; ?>;
 
             <?php endif; ?>
-            padding:4vw;
+            font-family:roboto;
+            width:80%;
+            
 
          }
 
+        /*.g-recaptcha{
+            border:2px solid black;
+            width:80%;
+            
+        }
+
+
+        .g-recaptcha div{
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+        .forgetmenot{
+            width:100%;
+            text-align: center;
+        }
+        input#wp-submit{
+            width:100%;
+        } */
+        
          #login{
             background-color: black;
+            margin-top:5vw;
+            width:40vw;
+            padding:0.5vw;
+            border-radius:0.5vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
          }
 
-        
+         #login-message{
+            margin-top:1vw;
+         }
 
     
 

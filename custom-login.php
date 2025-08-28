@@ -50,7 +50,7 @@ if(!class_exists('Wp_Custom_Login')){
         wp_enqueue_style('login_style', Wp_Custom_Drive . '/classes/class-options-css.php');
 
     }*/
-    public function locate_parts($slug, $args1 = [], $args2 = []){
+    public function locate_parts($slug, $args1 = [], $args = [],  $args2 = []){
         //extract($args1);
         //extract($args2);
         $path = Wp_Custom_Drive . "/parts/$slug.php";

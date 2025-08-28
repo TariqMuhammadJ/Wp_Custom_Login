@@ -5,9 +5,10 @@
         <div class="settings-bar">
             <div class="menu-settings">
                 <ul>
-                    <li id="main">Main Options</li>
-                    <li id="second">Secondary</li>
-                    <li id="third">third</li>
+                    <li id="main">Images</li>
+                    <li id="second">Recaptcha</li>
+                    <li id="third">Colors</li>
+                    <li id="fourth">Text Errors</li>
                 </ul>
             </div>
             <form method="post" action="options.php" class="form-table" id="table-1">
@@ -17,7 +18,6 @@
                 do_settings_fields('custom_login', 'main_section');
                 submit_button();
                 ?>
-                <button>Reset changes</button>
             </form>
             <form method="post" action="options.php" class="form-table" id="table-2">
                 <?php
@@ -28,7 +28,7 @@
                 do_action('encrypted_details');
                 ?>
             </form>
-            <form action="post" class="form-table" id="table-3">
+            <form method="post" action="options.php" class="form-table" id="table-3">
                 <?php 
 
                 settings_fields('form_color');
@@ -37,10 +37,20 @@
 
                 ?>
             </form>
+            <form method="post" action="options.php" class="form-table" id="table-4">
+                <?php 
+
+                settings_fields('text_errors');
+                do_settings_fields('custom_login', 'fourth_section');
+                submit_button();
+
+                ?>
+            </form>
         </div>
 
         <!--<div class="iframe-bar">
-            <img src="<?php echo Class_Options::getLive(wp_login_url()); ?>" alt="">
+            <img src="
+            
 
         </div>-->
 
