@@ -88,17 +88,17 @@ if (!class_exists('Class_Options')) {
         }
 
         body.login h1{
-            border:2px solid white;
-            height: max-content;
+            height: min-content;
+            width: min-content;
             text-align: center;
-            margin-top:0;
+            margin-top:1vw;
         }
 
         body.login h1 a {
             <?php if(isset($options['login_logo'])) : ?> 
                 background-image:url(<?php echo esc_url($options['login_logo']); ?>);
             <?php endif; ?>
-            border:2px solid white;
+            border-radius:1vw;
         }
 
         #loginform {
@@ -106,11 +106,32 @@ if (!class_exists('Class_Options')) {
                 background-color:<? echo esc_attr($colors['form_color']) ; ?>;
 
             <?php endif; ?>
-            font-family:roboto;
-            width:80%;
+            font-size:1.2rem;
+            width:min-content;
             
 
          }
+
+         #login-message{
+            width:80%;
+         }
+
+
+         #loginform p, div {
+            margin-top:0.2vw;
+            margin-bottom:0.2vw;
+            
+         }
+
+         #loginform label{
+            font-family: roboto;
+         }
+
+
+         #wp-submit{
+            width:100%;
+         }
+
 
         /*.g-recaptcha{
             border:2px solid black;
@@ -135,13 +156,13 @@ if (!class_exists('Class_Options')) {
          #login{
             background-color: black;
             margin-top:5vw;
-            width:40vw;
-            padding:0.5vw;
-            border-radius:0.5vw;
+            width:min-content;
+            padding:0.2vw;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            box-sizing:content-box;
          }
 
          #login-message{
