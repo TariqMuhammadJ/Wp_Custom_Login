@@ -87,18 +87,12 @@ if (!class_exists('Class_Options')) {
             
         }
 
-        body.login h1{
-            height: min-content;
-            width: min-content;
-            text-align: center;
-            margin-top:1vw;
-        }
+        
 
         body.login h1 a {
             <?php if(isset($options['login_logo'])) : ?> 
                 background-image:url(<?php echo esc_url($options['login_logo']); ?>);
             <?php endif; ?>
-            border-radius:1vw;
         }
 
         #loginform {
@@ -108,67 +102,10 @@ if (!class_exists('Class_Options')) {
             <?php endif; ?>
             font-size:1.2rem;
             width:min-content;
+            border:0.5vw;
             
 
-         }
-
-         #login-message{
-            width:80%;
-         }
-
-
-         #loginform p, div {
-            margin-top:0.2vw;
-            margin-bottom:0.2vw;
-            
-         }
-
-         #loginform label{
-            font-family: roboto;
-         }
-
-
-         #wp-submit{
-            width:100%;
-         }
-
-
-        /*.g-recaptcha{
-            border:2px solid black;
-            width:80%;
-            
-        }
-
-
-        .g-recaptcha div{
-            margin-left:auto;
-            margin-right:auto;
-        }
-
-        .forgetmenot{
-            width:100%;
-            text-align: center;
-        }
-        input#wp-submit{
-            width:100%;
-        } */
-        
-         #login{
-            background-color: black;
-            margin-top:5vw;
-            width:min-content;
-            padding:0.2vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            box-sizing:content-box;
-         }
-
-         #login-message{
-            margin-top:1vw;
-         }
-
+            }
     
 
         /* Add more CSS rules here */
