@@ -70,10 +70,6 @@ if(!class_exists('Custom_Login')){
         }
 
         public function load_scripts(){
-            /*remove_action('login_enqueue_scripts', 'wp_print_styles', 20);
-            remove_action('login_enqueue_scripts', 'wp_enqueue_scripts', 1);
-            remove_action('login_enqueue_scripts', 'wp_print_scripts', 20);
-            remove_action('login_head', 'wp_shake_js', 12); */
 
             wp_enqueue_script('modifier-js', Wp_Custom_Url . '/js/modifier.js', [], 'all');
 
@@ -136,7 +132,32 @@ if(!class_exists('Custom_Login')){
             }
         }
 
-       // I forgot to check if the site_key is initialized
+       private function getErrorMessages($key){
+            $options = get_option('text_error_options', []);
+
+            switch($key){
+                case 'recaptcha_error_msg':
+                    $msg = !empty($options['recaptcha_error_msg'])
+                        ? $options['recaptcha_error_msg']
+                        : __('Please complete the reCAPTCHA.', 'custom-login');
+                    return new WP_Error('recaptcha_missing', $msg);
+
+                case 'recaptcha_failed_msg':
+                    $msg = !empty($options['recaptcha_failed_msg'])
+                        ? $options['recaptcha_failed_msg']
+                        : __('Recaptcha Failed', 'custom-login');
+                    return new WP_Error('recaptcha_failed', $msg);
+
+                case 'username_pass_msg':
+                    $msg = !empty($options['username_pass_msg'])
+                        ? $options['username_pass_msg']
+                        : __('Username or Password cannot be empty.', 'custom-login');
+                    return new WP_Error('empty_credentials', $msg);
+            }
+
+            return null; // fallback if no case matched
+}
+
 
         public function authenticate_user($user, $username, $password){
             $secret_key = secret_key;
@@ -153,16 +174,16 @@ if(!class_exists('Custom_Login')){
 
                 }
                 else {
-                    return new WP_Error('recaptcha failed', __('ReCaptcha Failed', 'custom-login'));
+                    return $this->getErrorMessages('recaptcha_failed_msg');
                 }
 
             }
             else {
-                return new WP_Error('recaptcha_missing', __('Please complete the reCAPTCHA.', 'custom-login'));
+                return $this->getErrorMessages('recaptcha_error_msg');
             }
 
              if (empty($username) || empty($password)) {
-               return new WP_Error('empty_credentials', __('Username or password cannot be empty.', 'custom-login'));
+               return $this->getErrorMessages('username_pass_msg');
              }
 
             return wp_authenticate_username_password(null, $username, $password);

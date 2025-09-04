@@ -56,27 +56,41 @@ if (!class_exists('Class_Options')) {
         ?>
         <style type="text/css">
         body.login {
-            <?php if (isset($options['background_color'])): ?>
-                background-color: <?php echo esc_attr($options['background_color']); ?>;
-            <?php endif; ?>
             <?php if (isset($options['bg_image'])): ?>
                 background-image: url(<?php echo esc_url($options['bg_image']); ?>);
                 background-size:cover;
                 
                 
             <?php endif; ?>
+            <?php if(!isset($options['bg_image'])) : ?> 
+                background-color: <?php echo esc_attr($options['background_color']); ?>;
+            <?php endif; ?>
             
         }
 
+        #login{
+            <?php if(isset($colors['background_color'])) : ?> 
+                background-color : <?php echo esc_attr($colors['background_color']) ?>;
+
+            <?php endif; ?>
+        }
         
 
         body.login h1 a {
             <?php if(isset($options['login_logo'])) : ?> 
                 background-image:url(<?php echo esc_url($options['login_logo']); ?>);
             <?php endif; ?>
+
         }
 
-        #loginform {
+        body.login h1{
+            background-color: black;
+            margin:0;
+            padding:0;
+        }
+
+
+        #loginform{
             <?php if(isset($colors['form_color'])) : ?>
                 background-color:<? echo esc_attr($colors['form_color']) ; ?>;
 
@@ -87,6 +101,46 @@ if (!class_exists('Class_Options')) {
             
 
             }
+        #loginform input:not(input[type="submit"]){
+            <?php if(isset($colors['Input_Font_Color'])) : ?>
+                color : <? echo esc_attr($colors['Input_Font_Color']) ; ?>;
+                
+            
+            <? endif; ?>
+
+        }
+
+        #loginform label{
+            <?php if(isset($colors['label_User_Login'])) : ?>
+                color : <? echo esc_attr($colors['label_User_Login']) ?>;
+
+                <? endif; ?>
+        }
+
+        #login #login-message{
+            background-color:green;
+            color:white;
+            border-left: 2px solid white;
+        }
+
+        #login #login_error{
+            background-color:red;
+            color:white;
+            border-left: 2px solid orange;
+        }
+
+        #loginform input[type="submit"]{
+            <?php if(isset($colors['button_bg_color'])) : ?>
+                background-color : <? echo esc_attr($colors['button_bg_color']) ?>;
+            <? endif; ?>
+        }
+
+        .login #backtoblog a, .login #nav a{
+            <?php if(isset($colors['bottom_links'])) : ?> 
+                color : <?php echo esc_attr($colors['bottom_links']) ?>; 
+            <? endif; ?>
+
+        }
     
 
         /* Add more CSS rules here */

@@ -13,6 +13,7 @@ if (!class_exists('Custom_Admin')) {
             add_filter('pre_update_option_second_login_options', [$this,'validate_keys'], 10,  2);
             add_action('encrypted_details', [$this, 'successencrypt'], 30, 1);
             // we will work with this later add_action('phpmailer_init', array($this, 'custom_configuration'));
+            // do_action('encrypted details)
         }
 
     /*work with this to*/    
@@ -188,11 +189,27 @@ if (!class_exists('Custom_Admin')) {
                     'title' => 'Form Color',
                     'type' => 'form_color'
                 ],
+               
                 [
-                    'id' => 'animations',
-                    'title' => 'Form Animations',
-                    'type' => 'form_animations',
-                ]   
+                    'id' => 'Input_Font_Color',
+                    'title' => 'Input Font',
+                    'type' => 'Input-Font-Color'
+                ],
+                [
+                    'id' => 'label_User_Login',
+                    'title' => 'Username Label', 
+                    'type' => 'Label-User-Login'
+                ], 
+                [
+                    'id' => 'button_bg_color',
+                    'title' => 'Button Background Color',
+                    'type' => 'Button-Bg-Color'
+                ], 
+                [
+                    'id' => 'bottom_links', 
+                    'title' => 'Bottom Links',
+                    'type' => 'Bottom-Links'
+                ]
                 ];
 
 
@@ -208,6 +225,11 @@ if (!class_exists('Custom_Admin')) {
                         'title' => 'reCAPTCHA Failed Message',
                         'type' => 'recaptcha_message'
 
+                    ],
+                    [
+                        'id' => 'username_pass_msg',
+                        'title' => 'Username Pass Empty',
+                        'type' => 'recaptcha_msg'
                     ]
                 ];
 
@@ -268,6 +290,7 @@ if (!class_exists('Custom_Admin')) {
         public function render_fields($field) {
         if(!isset($field) && !isset($field['option_name'])){
             echo '<p class="error">Option not set</p>';
+            return;
 
         }
 

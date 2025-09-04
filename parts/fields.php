@@ -34,9 +34,13 @@ switch($type){
         break;
     case 'background-color' :
     case 'form_color':
+    case 'Input-Font-Color':
+    case 'Label-User-Login' :
+    case 'Button-Bg-Color' :
+    case 'Bottom-Links':
         echo "<p class='setting_title'>$title</p>";
         echo "<input type='text' name='{$field['option_name']}[$id]' id='accent_color' value='$value' class='my-color-field' 
-        data-default-color='#ff6600' />";
+        data-default-color='' />";
         break;
     
     case 'recaptcha_secret_key' :
@@ -44,9 +48,11 @@ switch($type){
          echo "<input type='text' name='{$field['option_name']}[$id]' id='{$id}' value='$value' class='regular-text' />";
          break;
 
-    /*default:
-        echo "Hello World";
-        */
+    default:
+        echo "<p class='setting_title'>$title</p>";
+        echo "<input type='text' name='{$field['option_name']}[$id]' id='{$id}' value='$value' class='regular-text' />";
+        break;
+       
 
 
 
