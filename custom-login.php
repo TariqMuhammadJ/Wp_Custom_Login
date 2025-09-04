@@ -136,6 +136,24 @@ function Wp_Custom_Login(){
 
 }
 
+register_deactivation_hook(__FILE__, 'my_plugin_on_deactivate');
+
+function my_plugin_on_deactivate() {
+    wp_clear_scheduled_hook('my_plugin_cron_event');
+}
+
+
+register_uninstall_hook(__FILE__, 'plugin_on_delete');
+
+function plugin_on_delete(){
+    delete_option('custom_login_options');
+    delete_option('second_login_options');
+    delete_option('form_color_options');
+    delete_option('text_error_options');
+
+}
+
+
 Wp_Custom_Login();
 
 }
