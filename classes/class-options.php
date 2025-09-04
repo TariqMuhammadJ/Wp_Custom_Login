@@ -2,35 +2,16 @@
 
 
 if (!class_exists('Class_Options')) {
-    require_once Wp_Custom_Drive . '/vendor/autoload.php';
     
     class Class_Options {
         
-        public static $url;
-        private $dotenv;
+       
         
         public function __construct(){
-            self::$url = 'https://sour-smoke.localsite.io';
-            $this->dotenv = Dotenv\Dotenv::createImmutable(Wp_Custom_Drive);
-            $this->dotenv->load();
-
-
-            //$this->enqueue_ajax();
-            //add_action('wp_ajax_my_login_styles', [$this, 'verify_ajax']);
+          
             add_filter('wp_login_errors', [$this, 'modify_recaptcha_message'], 9, 2);
         }
 
-      public static function getLive($login){
-        $url = add_query_arg(array(
-                'key' => $_ENV['key'],
-                'url' => wp_parse_url(self::$url, PHP_URL_PATH),
-                'dimension' => $_ENV['dimension'],
-            ),
-            'https://api.screenshotmachine.com');
-
-        return $url;
-        
-      }
 
       public function enqueue_ajax(){
             wp_enqueue_script(

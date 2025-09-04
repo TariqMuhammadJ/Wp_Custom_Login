@@ -9,7 +9,7 @@ if(!class_exists('Custom_Login')){
         private $decryptor;
 
         public function __construct(){
-            $this->recaptcha_keys = require __DIR__ . '/class-config.php';
+            /*$this->recaptcha_keys = require __DIR__ . '/class-config.php'; */
             $this->include();
             $this->decryptor = new Encryptor(secret_key);
             add_action('login_enqueue_scripts', array($this, 'load_scripts'));
@@ -70,24 +70,29 @@ if(!class_exists('Custom_Login')){
         }
 
         public function load_scripts(){
-        wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js', array());
-        
-        wp_enqueue_style(
-        'my-login-style', // handle
-        Wp_Custom_Url . '/css/custom.css', // path to your css
-        array(), // dependencies
-        '1.0', // version
-        'all' // media
-    );
-        add_filter('login_headerurl', function () {
-            return home_url();
-        } );
-        add_filter('login_headertext',  function (){
-            return get_bloginfo('name');
-        });
+            /*remove_action('login_enqueue_scripts', 'wp_print_styles', 20);
+            remove_action('login_enqueue_scripts', 'wp_enqueue_scripts', 1);
+            remove_action('login_enqueue_scripts', 'wp_print_scripts', 20);
+            remove_action('login_head', 'wp_shake_js', 12); */
 
-                
-    }
+            wp_enqueue_script('modifier-js', Wp_Custom_Url . '/js/modifier.js', [], 'all');
+
+            wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js', array());
+
+            wp_enqueue_style(
+                'my-login-style', // handle
+                Wp_Custom_Url . '/css/custom.css', // path to your css
+                array(), // dependencies
+                '1.0', // version
+                'all' // media
+            );
+            add_filter('login_headerurl', function () {
+                return home_url();
+            });
+            add_filter('login_headertext',  function () {
+                return get_bloginfo('name');
+            });
+        }
 
         
 
@@ -165,6 +170,8 @@ if(!class_exists('Custom_Login')){
         }
             
       }
+
+    
 
             
 

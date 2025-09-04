@@ -31,6 +31,7 @@ if(!defined('ABSPATH')){
 if(!class_exists('Wp_Custom_Login')){
     class Wp_Custom_Login{
     private static $instance;
+    
 
     public static function instance(){
         if(!isset(self::$instance) && !(self::$instance instanceof Wp_Custom_Login)){
@@ -50,18 +51,23 @@ if(!class_exists('Wp_Custom_Login')){
         wp_enqueue_style('login_style', Wp_Custom_Drive . '/classes/class-options-css.php');
 
     }*/
-    public function locate_parts($slug, $args1 = [], $args = [],  $args2 = []){
-        //extract($args1);
-        //extract($args2);
-        $path = Wp_Custom_Drive . "/parts/$slug.php";
-        if(file_exists($path)){
-            return $path;
+   public function locate_parts($slug, ...$args){
+    // $args is now an array of all extra arguments
+    foreach ($args as $index => $arg) {
+        // Optionally extract arrays if needed
+        if (is_array($arg)) {
+            extract($arg);
         }
-        else {
-            return false;
-        }
-        
     }
+
+    $path = Wp_Custom_Drive . "/parts/$slug.php";
+
+    if (file_exists($path)) {
+        return $path;
+    } else {
+        return false;
+    }
+}
 
     public function locate_template($slug){
         $path = Wp_Custom_Drive . "/templates/{$slug}.php";

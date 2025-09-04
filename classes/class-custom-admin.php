@@ -148,19 +148,7 @@ if (!class_exists('Custom_Admin')) {
                 'custom_login'
             );
             
-            $fields_2 = [
-                
-             [
-                    'id' => 'recaptcha_secret',
-                    'title' => 'Recaptcha Secret Key',
-                    'type' => 'recaptcha_secret_key'
-             ],[
-                    'id' => 'recaptcha_key',
-                    'title' => 'Recaptcha Site Key',
-                    'type' => 'recaptcha_key'
-                ]
-            ];
-
+            
 
             $fields = [
                 [
@@ -175,20 +163,20 @@ if (!class_exists('Custom_Admin')) {
                 ],
             ];
 
-                $fields_4 = [
-                        [
-                        'id' => 'recaptcha_error_msg',
-                        'title' => 'recaptcha message',
-                        'type' => 'recaptcha_message'
-                    ],
-                    [
-                        'id' => 'recaptcha_failed_msg',
-                        'title' => 'reCAPTCHA Failed Message',
-                        'type' => 'recaptcha_message'
+            $fields_2 = [
+                
+             [
+                    'id' => 'recaptcha_secret',
+                    'title' => 'Recaptcha Secret Key',
+                    'type' => 'recaptcha_secret_key'
+             ],[
+                    'id' => 'recaptcha_key',
+                    'title' => 'Recaptcha Site Key',
+                    'type' => 'recaptcha_key'
+                ]
+            ];
 
-                    ]
-                ];
-
+            
                 $fields_3 = [
                     [
                     'id' => 'background_color',
@@ -209,7 +197,24 @@ if (!class_exists('Custom_Admin')) {
 
 
 
+                $fields_4 = [
+                        [
+                        'id' => 'recaptcha_error_msg',
+                        'title' => 'recaptcha message',
+                        'type' => 'recaptcha_message'
+                    ],
+                    [
+                        'id' => 'recaptcha_failed_msg',
+                        'title' => 'reCAPTCHA Failed Message',
+                        'type' => 'recaptcha_message'
+
+                    ]
+                ];
+
+
+
                 foreach($fields as $field){
+                    $field['option_name'] = 'custom_login_options';
                     add_settings_field(
                         $field['id'],
                         '',
@@ -221,10 +226,11 @@ if (!class_exists('Custom_Admin')) {
                 }
 
                 foreach($fields_2 as $field){
+                    $field['option_name'] = 'second_login_options';
                     add_settings_field(
                         $field['id'],
                         $field['title'],
-                        [$this, 'render_fields_2'],
+                        [$this, 'render_fields'],
                         'custom_login',
                         'secondary_section',
                         $field
@@ -232,6 +238,7 @@ if (!class_exists('Custom_Admin')) {
                 }
 
                 foreach($fields_3 as $field){
+                    $field['option_name'] = 'form_color_options';
                     add_settings_field(
                         $field['id'],
                         '',
@@ -244,7 +251,8 @@ if (!class_exists('Custom_Admin')) {
 
                 }
                 foreach($fields_4 as $field){
-                    add_settings_section(
+                    $field['option_name'] = 'text_error_options';
+                    add_settings_field(
                         $field['id'],
                         '',
                         [$this, 'render_fields'],
@@ -256,18 +264,16 @@ if (!class_exists('Custom_Admin')) {
 
         }
 
-        public function render_fields_2($field){
-            $options = get_option('second_login_options');
-            $id = $field['id'];
-            $value = isset($options[$id]) ? esc_attr($options[$id]) : '';
-            echo "<input type='text' name='second_login_options[$id]' id='{$id}' value='$value' class='regular-text' />";
+       
+        public function render_fields($field) {
+        if(!isset($field) && !isset($field['option_name'])){
+            echo '<p class="error">Option not set</p>';
+
         }
 
-        public function render_fields($field) {
-        $options = get_option('custom_login_options');
-        $options2 = get_option('text_error_options');
+        $options = get_option($field['option_name']);
         global $Wp_Custom_Login;
-        require $Wp_Custom_Login->locate_parts('fields', $options, $options2,  $field);
+        require $Wp_Custom_Login->locate_parts('fields',$options ,  $field);
 
         
     }
@@ -275,12 +281,12 @@ if (!class_exists('Custom_Admin')) {
         public function settings_page() {
             global $Wp_Custom_Login;
             $url = add_query_arg(
-    [
-        'page' => 'Custom_Login',
-        'tab'  => 'advanced'
-    ],
-    admin_url()
-);
+            [
+                'page' => 'Custom_Login',
+                'tab'  => 'advanced'
+            ],
+            admin_url()
+        );
             include $Wp_Custom_Login->locate_template('custom-settings');
         }
 

@@ -13,10 +13,9 @@
             </div>
             <form method="post" action="options.php" class="form-table" id="table-1">
                 <?php
-                
                 settings_fields('custom_login_group');
                 do_settings_fields('custom_login', 'main_section');
-                submit_button();
+                submit_button('Save Images');
                 ?>
             </form>
             <form method="post" action="options.php" class="form-table" id="table-2">

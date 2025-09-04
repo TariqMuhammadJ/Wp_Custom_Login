@@ -5,64 +5,25 @@
 
 /* === Login form wrapper === */
 
-
-#login-message{
-            width:80%;
-         }
-
-
-#loginform p, div {
-margin-top:0.2vw;
-margin-bottom:0.2vw;
-
+body.login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-#loginform label{
-font-family: roboto;
-}
-
-
-#wp-submit{
-width:100%;
-}
-
 
 #login{
-        background-color: black;
-        margin-top:5vw;
-        width:min-content;
-        padding:0.2vw;
-        border-radius:0.5vw;
-        display: flex;
-        background-color: inherit;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        box-sizing:content-box;
-        }
-
-#login-message{
-margin-top:1vw;
-}
-
-
-body #login h1 {
-  /*all:unset; */
-  height: max-content;
   width: min-content;
-  clear: both;
-  border: 2px solid white;
-  margin-top: 1vw;
-  margin-bottom:1vw;
+  height: min-content;
+  padding:0;
 }
 
-.login h1 a {        /* fills parent */
-  width: 15vw;          /* same width as h1 */
-  height: 10vw;          
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin:0 0 0 0;
-  border-radius:0.1vw;
+
+
+body.login h1 a {
+
+}
+
+#login form p{
+  width:100%;
 }
 
