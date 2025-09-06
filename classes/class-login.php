@@ -16,7 +16,7 @@ if(!class_exists('Custom_Login')){
             add_action('login_form', array($this, 'add_recaptcha_field'),);
             add_action('login_head', array('Class_Options', 'custom_css'));
             add_filter('authenticate', array($this, 'authenticate_user'), 20, 3);
-            add_filter('retrieve_password_message', array($this, 'render_email_template'), 4);
+            //add_filter('retrieve_password_message', array($this, 'render_email_template'), 4);
             add_filter('retrieve_password_title', array($this, 'retrieve_title'), 2);
             add_filter('wp_mail_content_type', array($this, 'mail_type'),);
           
@@ -25,7 +25,7 @@ if(!class_exists('Custom_Login')){
         
 
        
-        public function render_email_template($message, $key, $user_login, $user_data){
+       /* public function render_email_template($message, $key, $user_login, $user_data){
             global $Wp_Custom_Login;
             $reset_link = network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login');
             $template = $Wp_Custom_Login->locate_template('lost-password');
@@ -55,6 +55,7 @@ if(!class_exists('Custom_Login')){
         
 
         }
+            */
 
         public function mail_type(){
             return 'text/html';

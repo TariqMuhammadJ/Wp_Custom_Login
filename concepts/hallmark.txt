@@ -14,3 +14,14 @@ REcaptcha-Key-Fields
 // use alot of forms of concepts that you can use 
 // make sure to make it reactive and fun
 // wish you all the best
+
+
+ /*add_submenu_page(
+                'Custom_Login',                // parent slug (MUST match main menu slug)
+                'Secondary Settings',          // page title (shown in browser title)
+                'Secondary Settings',          // menu title (shown in sidebar)
+                'manage_options',              // capability
+                'custom_login_secondary',      // submenu slug
+                [$this, 'secondary_settings_page'] // callback function
+            );
+            */ Hwo to add submenu pages

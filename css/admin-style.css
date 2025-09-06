@@ -39,7 +39,7 @@
     background: #1f1f1f;
     border-radius: 12px;
     padding: 2vw;
-    min-height: 400px;
+    min-height: 100vh;
     transition: box-shadow 0.3s ease;
 }
 

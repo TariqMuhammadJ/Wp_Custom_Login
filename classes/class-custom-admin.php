@@ -36,7 +36,7 @@ if (!class_exists('Custom_Admin')) {
             // First time save, always encrypt
             if (!empty($new_value['recaptcha_secret'])) {
                 $new_value['recaptcha_secret'] = $this->encryptor->encrypt($new_value['recaptcha_secret']);
-                error_log($new_value['recaptcha_secret']);
+                //error_log($new_value['recaptcha_secret']);
                 $this->successencrypt($message="you have successfully encrypted");
             }
             return $new_value;
@@ -75,6 +75,7 @@ if (!class_exists('Custom_Admin')) {
             wp_enqueue_media();
             wp_enqueue_style('wp-color-picker');
             wp_enqueue_script('my-color-picker', Wp_Custom_Url . '/js/color-picker.js', ['wp-color-picker'], false, true);
+
              
             wp_enqueue_script(
                 'custom-admin-media',
@@ -91,6 +92,20 @@ if (!class_exists('Custom_Admin')) {
                 Wp_Custom_Version,
                 true
             );
+              wp_enqueue_script(
+                'slider-options',
+                Wp_Custom_Url . '/js/input-slider.js',
+                [],
+                Wp_Custom_Version,
+                true
+            );
+
+            /*wp_localize_script(
+                'slider-options', 'sliderAjax', array(
+                    'ajax_url' => admin_url('admin-ajax.php')
+                )
+                ); */
+
         }
 
         public function admin_menu() {
@@ -103,15 +118,6 @@ if (!class_exists('Custom_Admin')) {
                 'dashicons-lock',                // Icon
                 81                               // Position
             );
-            /*add_submenu_page(
-                'Custom_Login',                // parent slug (MUST match main menu slug)
-                'Secondary Settings',          // page title (shown in browser title)
-                'Secondary Settings',          // menu title (shown in sidebar)
-                'manage_options',              // capability
-                'custom_login_secondary',      // submenu slug
-                [$this, 'secondary_settings_page'] // callback function
-            );
-            */
            
 
         }
@@ -162,6 +168,11 @@ if (!class_exists('Custom_Admin')) {
                     'title' => 'Login Logo Url',
                     'type' => 'login_logo'
                 ],
+                [
+                    'id' => 'form_background',
+                    'title' => 'Form Background Image',
+                    'type' => 'form_bg'
+                ]
             ];
 
             $fields_2 = [
@@ -195,6 +206,7 @@ if (!class_exists('Custom_Admin')) {
                     'title' => 'Input Font',
                     'type' => 'Input-Font-Color'
                 ],
+                
                 [
                     'id' => 'label_User_Login',
                     'title' => 'Username Label', 
@@ -209,6 +221,16 @@ if (!class_exists('Custom_Admin')) {
                     'id' => 'bottom_links', 
                     'title' => 'Bottom Links',
                     'type' => 'Bottom-Links'
+                ], 
+                [
+                    'id' => 'label_font',
+                    'title' => 'Font Size',
+                    'type' => 'font_size'
+                ],
+                [
+                    'id' => 'border_radius',
+                    'title' => 'Form Border Radius',
+                    'type' => 'form_border'
                 ]
                 ];
 

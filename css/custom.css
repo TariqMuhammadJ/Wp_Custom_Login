@@ -19,6 +19,12 @@ body.login{
 
 
 
+
+
+#login p#nav, #login p#backtoblog{
+  margin-top:0;
+}
+
 body.login h1 a {
 
 }

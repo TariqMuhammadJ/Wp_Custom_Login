@@ -20,7 +20,7 @@
             </form>
             <form method="post" action="options.php" class="form-table" id="table-2">
                 <?php
-        
+                ?> <p>Please add your Recaptcha over here</p> <?
                 settings_fields('second_login_group');
                 do_settings_fields('custom_login', 'secondary_section');
                 submit_button();
